@@ -1,53 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:io';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Wallpaper Manager Example'),
-        ),
-        body: Center(
-          child: ElevatedButton(
-            child: const Text('Set Wallpaper'),
-            onPressed: () async {
-              String assetPath = 'assets/rain.jpg';
-              ByteData data = await rootBundle.load(assetPath);
-              List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-              String dir = (await getTemporaryDirectory()).path;
-              String path = '$dir/temp.jpg';
-              File tempFile = File(path);
-              await tempFile.writeAsBytes(bytes);
+      home: BackgroundScreen(),
+    );
+  }
+}
 
-              try {
-                final bool homeResult = await WallpaperManager.setWallpaperFromFile(
-                  path, WallpaperManager.HOME_SCREEN,
-                );
-                final bool lockResult = await WallpaperManager.setWallpaperFromFile(
-                  path, WallpaperManager.LOCK_SCREEN,
-                );
-                if(homeResult && lockResult){
-                  debugPrint("Wallpaper set successfully on both screens");
-                } else {
-                  debugPrint("unable to be set");
-                }
-              } on PlatformException {
-                debugPrint("Wallpaper could not be set");
-              }
-            },
-          ),
-        ),
+class BackgroundScreen extends StatelessWidget {
+  final String websiteUrl = 'https://ptluaan.github.io/-raindrop_effect/';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Set Website as Background'),
+      ),
+      body: InAppWebView(
+        initialUrlRequest: URLRequest(url: Uri.parse(websiteUrl)),
+        onWebViewCreated: (controller) {
+          // WebView가 준비되면 콘텐츠를 배경화면으로 설정합니다.
+          controller.evaluateJavascript(source: '''
+            // JavaScript 코드를 여기에 넣어서 콘텐츠를 수정하거나 추가할 수 있습니다.
+            // 예를 들어 배경화면을 전체 화면으로 확대하거나 이미지를 가운데로 정렬하는 등의 작업을 수행할 수 있습니다.
+          ''');
+        },
       ),
     );
   }
