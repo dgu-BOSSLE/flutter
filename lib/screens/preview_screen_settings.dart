@@ -4,7 +4,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class PreviewScreenSettingsScreen extends StatefulWidget {
   final File? imageFile;
-  final String websiteUrl = 'https://f29f-61-72-189-152.ngrok-free.app/';
+  final String websiteUrl = 'https://fe82-61-72-189-152.ngrok-free.app/';
 
   PreviewScreenSettingsScreen({required this.imageFile});
 
@@ -13,7 +13,8 @@ class PreviewScreenSettingsScreen extends StatefulWidget {
 }
 
 class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScreen> {
-  double _sliderValue = 50; // 초기 슬라이더의 값은 50으로 설정
+  double _sliderValue = 50;
+  late InAppWebViewController _webViewController;  // 웹뷰 컨트롤러를 선언
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +28,15 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
             child: InAppWebView(
               initialUrlRequest: URLRequest(url: Uri.parse(widget.websiteUrl)),
               onWebViewCreated: (controller) {
+                _webViewController = controller;  // 웹뷰 컨트롤러 초기화
                 controller.evaluateJavascript(source: '''
-                  // JavaScript 코드를 여기에 넣어서 콘텐츠를 수정하거나 추가할 수 있습니다.
-                  // 예를 들어 배경화면을 전체 화면으로 확대하거나 이미지를 가운데로 정렬하는 등의 작업을 수행할 수 있습니다.
-                ''');
+  function onSliderValueChanged(value) {
+    if (window.effectCanvas && window.effectCanvas.dropletManager && typeof window.effectCanvas.dropletManager.setIntensity === "function") {
+      window.effectCanvas.dropletManager.setIntensity(value);
+    }
+  }
+''');
+
               },
             ),
           ),
@@ -47,6 +53,9 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                       setState(() {
                         _sliderValue = value;
                       });
+                      // 슬라이더 값이 변경될 때마다 웹뷰의 onSliderValueChanged 함수 호출
+                      _webViewController.evaluateJavascript(source: 'setGlobalDropletIntensity($_sliderValue);');
+
                     },
                     min: 0,
                     max: 100,
