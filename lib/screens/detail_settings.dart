@@ -1,22 +1,159 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'preview_screen_settings.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-class DetailSettingsScreen extends StatelessWidget {
+class DetailSettingsScreen extends StatefulWidget {
+  @override
+  _DetailSettingsState createState() => _DetailSettingsState();
+}
+
+class _DetailSettingsState extends State<DetailSettingsScreen> {
+  bool _sync_weather = true;
+  bool _sunny = true;
+  bool _rainy = true;
+  bool _rainy_hard = true;
+  bool _snowy = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Detail Settings Screen'),
+      appBar: AppBar(title: Text('설정')),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const CustomCard(title: '바탕화면 선택', content: [
+              ElevatedButton(onPressed: null, child: Text('갤러리')),
+              ElevatedButton(onPressed: null, child: Text('현재 바탕화면')),
+            ]),
+            SizedBox(height: 16.0),
+
+            CustomCard(title: '날씨 동기화', content: [
+              Text('안함'),
+              Switch(
+                value: _sync_weather,
+                onChanged: (value) {
+                  setState(() {
+                    _sync_weather = value;
+                  });
+                },
+              ),
+              Text('동기화'),
+            ]),
+            SizedBox(height: 16.0),
+
+            CustomCard(title: '선택한 날씨만 활성화', content: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children:[
+                  SvgPicture.asset('assets/icons/icon_sunny.svg',
+                    width: 40, height: 40,
+                  ),
+                  Checkbox(
+                    value: _sunny,
+                    onChanged: (value) {
+                      setState(() {
+                        _sunny = value!;
+                      });
+                    },
+                  ),
+                ],
+              ),
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children:[
+                  SvgPicture.asset('assets/icons/icon_rainy.svg',
+                    width: 40, height: 40,
+                  ),
+                  Checkbox(
+                    value: _rainy,
+                    onChanged: (value) {
+                      setState(() {
+                        _rainy = value!;
+                      });
+                    },
+                  ),
+                ],
+              ),
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children:[
+                  SvgPicture.asset('assets/icons/icon_rainy_hard.svg',
+                    width: 40, height: 40,
+                  ),
+                  Checkbox(
+                    value: _rainy_hard,
+                    onChanged: (value) {
+                      setState(() {
+                        _rainy_hard = value!;
+                      });
+                    },
+                  ),
+                ],
+              ),
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children:[
+                  SvgPicture.asset('assets/icons/icon_snowy.svg',
+                    width: 40, height: 40,
+                  ),
+                  Checkbox(
+                    value: _snowy,
+                    onChanged: (value) {
+                      setState(() {
+                        _snowy = value!;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ]),
+            SizedBox(height: 16.0),
+
+            ElevatedButton(onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PreviewScreenSettingsScreen()),
+              );
+            }, child: Text('효과 설정 미리보기')),
+          ],
+        ),
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => PreviewScreenSettingsScreen()),
-            );
-          },
-          child: Text('Go to Preview Screen Settings'),//프리뷰 내 사용자 설정
+    );
+  }
+}
+
+class CustomCard extends StatelessWidget {
+  final String title;
+  final List<Widget> content;
+
+  const CustomCard({required this.title, required this.content});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 8.0,
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8.0),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: content,
+            )
+          ],
+
         ),
       ),
     );
