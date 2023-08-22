@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'preview_screen_settings.dart';
-
+import 'preview_before_applying.dart';
 class DetailSettingsScreen extends StatefulWidget {
   @override
   _DetailSettingsScreenState createState() => _DetailSettingsScreenState();
@@ -50,6 +50,16 @@ class _DetailSettingsScreenState extends State<DetailSettingsScreen> {
                 );
               },
               child: Text('Go to Preview Screen Settings'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PreviewBeforeApplyingScreen()),
+                );
+              },
+              child: Text('Go to  Preview Before Applying'),
             ),
           ],
         ),
