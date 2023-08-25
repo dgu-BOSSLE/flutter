@@ -38,12 +38,12 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const CustomCard(title: '바탕화면 선택', content: [
+            CustomCard(title: '바탕화면 선택', content: [
               if (_selectedImage != null)
-              Image.file(
-                _selectedImage!,
-                height: 200,
-              ),
+                Image.file(
+                  _selectedImage!,
+                  height: 200,
+                ),
               ElevatedButton(onPressed: _pickImage, child: Text('갤러리')),
               ElevatedButton(onPressed: null, child: Text('현재 바탕화면')),
             ]),
