@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import 'preview_screen_settings.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -9,11 +11,23 @@ class DetailSettingsScreen extends StatefulWidget {
 }
 
 class _DetailSettingsState extends State<DetailSettingsScreen> {
+  File? _selectedImage;
   bool _sync_weather = true;
   bool _sunny = true;
   bool _rainy = true;
   bool _rainy_hard = true;
   bool _snowy = true;
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedImage != null) {
+      setState(() {
+        _selectedImage = File(pickedImage.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +39,12 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const CustomCard(title: '바탕화면 선택', content: [
-              ElevatedButton(onPressed: null, child: Text('갤러리')),
+              if (_selectedImage != null)
+              Image.file(
+                _selectedImage!,
+                height: 200,
+              ),
+              ElevatedButton(onPressed: _pickImage, child: Text('갤러리')),
               ElevatedButton(onPressed: null, child: Text('현재 바탕화면')),
             ]),
             SizedBox(height: 16.0),
@@ -118,7 +137,7 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
             ElevatedButton(onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PreviewScreenSettingsScreen()),
+                MaterialPageRoute(builder: (context) => PreviewScreenSettingsScreen(imageFile: _selectedImage)),  //context로 이미지 전달하며 프리뷰로 이동!
               );
             }, child: Text('효과 설정 미리보기')),
           ],
