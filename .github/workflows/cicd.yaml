@@ -22,7 +22,7 @@ jobs:
       - name: 종속 패키지 설치
         run: flutter pub get
 
-      - name: 앱 빌드 및
+      - name: 앱 빌드 및 번들 생성
         run: |
-          flutter build apk --release
-          flutter build appbundle --release
+          flutter build apk
+          flutter build appbundle
