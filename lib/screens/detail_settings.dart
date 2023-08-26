@@ -60,32 +60,6 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                   });
                 },
               ),
-<<<<<<< HEAD
-            ElevatedButton(
-              onPressed: _pickImage,
-              child: Text('Select an Image from Gallery'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PreviewScreenSettingsScreen(imageFile: _selectedImage)),
-                );
-              },
-              child: Text('Go to Preview Screen Settings'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PreviewBeforeApplyingScreen()),
-                );
-              },
-              child: Text('Go to  Preview Before Applying'),
-            ),
-=======
               Text('동기화'),
             ]),
             SizedBox(height: 16.0),
@@ -167,7 +141,6 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                 MaterialPageRoute(builder: (context) => PreviewScreenSettingsScreen(imageFile: _selectedImage)),  //context로 이미지 전달하며 프리뷰로 이동!
               );
             }, child: Text('효과 설정 미리보기')),
->>>>>>> 0d6a5678703899e0d248f2fd46f0bba6e54e7552
           ],
         ),
       ),
