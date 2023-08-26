@@ -4,7 +4,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class PreviewScreenSettingsScreen extends StatefulWidget {
   final File? imageFile;
-  final String websiteUrl = 'https://fe82-61-72-189-152.ngrok-free.app/';
+  final String websiteUrl = 'https://5a72-61-72-189-152.ngrok-free.app/';
 
   PreviewScreenSettingsScreen({required this.imageFile});
 

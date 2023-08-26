@@ -15,7 +15,7 @@ class PreviewBeforeApplyingScreen extends StatefulWidget {
 
 class _PreviewBeforeApplyingScreenState extends State<PreviewBeforeApplyingScreen> {
   late InAppWebViewController _webViewController;
-  final String websiteUrl = 'https://be4e-61-72-189-152.ngrok-free.app/';
+  final String websiteUrl = 'https://9573-61-72-189-152.ngrok-free.app/';
 
   @override
   void initState() {
@@ -85,7 +85,7 @@ class _PreviewBeforeApplyingScreenState extends State<PreviewBeforeApplyingScree
       final decodedBytes = base64Decode(encodedStr);
 
       var dir = await getApplicationDocumentsDirectory();
-      var file = File('${dir.path}/downloadedFile.webm');
+      var file = File('${dir.path}/rain.mp4');
       await file.writeAsBytes(decodedBytes);
 
       print("File saved at ${file.path}");
