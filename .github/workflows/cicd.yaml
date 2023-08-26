@@ -1,0 +1,27 @@
+name: CI
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  CI:
+    name: CI for Flutter App
+    runs-on: ubuntu-latest
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v3
+
+      - uses: subosito/flutter-action@v2
+      - name: Set up Flutter
+        with:
+          flutter-version: "3.13.1"
+          channel: "stable"
+          cache: true
+
+      - name: 종속 패키지 설치
+        run: flutter pub get
+
+      - name: 앱 빌드 및
+        run: |
+          flutter build apk --release
+          flutter build appbundle --release
