@@ -39,13 +39,18 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             CustomCard(title: '바탕화면 선택', content: [
-              if (_selectedImage != null)
-                Image.file(
-                  _selectedImage!,
-                  height: 200,
-                ),
               ElevatedButton(onPressed: _pickImage, child: Text('갤러리')),
-              ElevatedButton(onPressed: null, child: Text('현재 바탕화면')),
+              SizedBox(width: 16),
+              Container(
+                width: 100,
+                height: 150,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.blue, width: 2),
+                ),
+                child: _selectedImage != null
+                  ? Image.file(_selectedImage!)
+                  : SizedBox.shrink(), // 이미지가 없는 경우 빈 공간을 사용합니다.
+              ),
             ]),
             SizedBox(height: 16.0),
 
