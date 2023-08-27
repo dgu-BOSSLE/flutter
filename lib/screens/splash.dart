@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; //강제종료시 사용
 import 'package:picture/screens/detail_settings.dart';
 import 'home.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:open_app_settings/open_app_settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -21,45 +21,44 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> permissionCheck(context) async{
-    var storageStatus = await Permission.storage.status;
-    if (storageStatus.isGranted) {
+    PermissionStatus storageStatus = await Permission.storage.status;
+    PermissionStatus locationStatus = await Permission.location.status;
+    if (storageStatus.isGranted && locationStatus.isGranted) {
       navigateHome(context);
     }
     else {
-      var storageRequest = await Permission.storage.request();
-      if (storageRequest.isGranted) {
-        navigateHome(context);
-      }
-      else {
-        Fluttertoast.showToast(msg: "앱 사용을 위한 저장소 사용 권한에 동의해 주세요.");
-        overridePermission();
+      Fluttertoast.showToast(msg: "앱 사용을 위한 권한에 동의해 주세요.");
+      PermissionStatus storageRequest;
+      do {
         storageRequest = await Permission.storage.request();
-        if (storageRequest.isGranted) {
-          navigateHome(context);
-        }
-      }
+      } while (!storageRequest.isGranted);
+      PermissionStatus locationRequest;
+      do {
+        locationRequest = await Permission.location.request();
+      } while (!locationRequest.isGranted);
+      navigateHome(context);
     }
   }
 
-  void overridePermission() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('권한이 거부되었습니다.'),
-        content: Text('앱 사용을 위한 저장소 사용 권한에 동의해 주세요.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              // 앱 설정 화면으로 이동
-              OpenAppSettings.openAppSettings();
-              Navigator.of(context).pop();
-            },
-            child: Text('Open Settings'),
-          ),
-        ],
-      ),
-    );
-  }
+  // void overridePermission() {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       title: Text('권한이 거부되었습니다.'),
+  //       content: Text('앱 사용을 위한 저장소 사용 권한에 동의해 주세요.'),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () {
+  //             // 앱 설정 화면으로 이동
+  //             OpenAppSettings.openAppSettings();
+  //             Navigator.of(context).pop();
+  //           },
+  //           child: Text('Open Settings'),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Future<void> navigateHome(context) async{
     SharedPreferences pref = await SharedPreferences.getInstance();
