@@ -1,10 +1,12 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class PreviewScreenSettingsScreen extends StatefulWidget {
   final File? imageFile;
-  final String websiteUrl = 'https://755a-61-72-189-152.ngrok-free.app/';
+  final String websiteUrl = 'https://05c8-125-177-248-169.ngrok-free.app/test.html';
 
   PreviewScreenSettingsScreen({required this.imageFile});
 
@@ -46,6 +48,10 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
   }
 ''');
             },
+            gestureRecognizers: Set()
+              ..add(Factory<LongPressGestureRecognizer>(
+                      () => LongPressGestureRecognizer())),
+            onProgressChanged: (InAppWebViewController controller, int progress) {},
           ),
           Positioned(
             bottom: 0,
@@ -116,7 +122,7 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                               setState(() {
                                 _sliderValue = value;
                               });
-                              _webViewController.evaluateJavascript(source: 'setGlobalDropletIntensity($_sliderValue);');
+                              _webViewController.evaluateJavascript(source: 'set_x_pro($_sliderValue);');
                             },
                             min: 0,
                             max: 100,
