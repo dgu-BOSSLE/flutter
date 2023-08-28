@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
 
 class PreviewScreenSettingsScreen extends StatefulWidget {
   final File? imageFile;
-  final String SnowWebsiteUrl = 'https://7ce3-61-102-174-151.ngrok-free.app';
+  final String SnowWebsiteUrl = 'https://f7e8-61-102-174-151.ngrok-free.app';
   final String RainWebsiteUrl = 'https://db22-61-72-189-152.ngrok-free.app';
 
   PreviewScreenSettingsScreen({required this.imageFile});
@@ -199,8 +199,8 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                                     });
                                     _snowWebViewController.evaluateJavascript(source: 'setSnowFallSpeed($_snowSpeedValue);');
                                   },
-                                  min: 0.5,
-                                  max: 3,
+                                  min: 0.2,
+                                  max: 2,
                                   divisions: 100,
                                   label: '${_snowSpeedValue.round()}%',
                                 ),
