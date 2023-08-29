@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/splash.dart';
+import 'screens/home.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SplashScreen(), // HomeScreen
+      home: HomeScreen(), // HomeScreen
     );
   }
 }

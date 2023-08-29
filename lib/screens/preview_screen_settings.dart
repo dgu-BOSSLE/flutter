@@ -26,7 +26,8 @@ class PreviewScreenSettingsScreen extends StatefulWidget {
   PreviewScreenSettingsScreen({required this.imageFile});
 
   @override
-  _PreviewScreenSettingsScreenState createState() => _PreviewScreenSettingsScreenState();
+  _PreviewScreenSettingsScreenState createState() =>
+      _PreviewScreenSettingsScreenState();
 }
 
 class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScreen> {
