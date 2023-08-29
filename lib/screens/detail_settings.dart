@@ -148,6 +148,16 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                   );
                 },
                 child: Text('효과 설정 미리보기')),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PreviewBeforeApplyingScreen()),
+                );
+              },
+              child: Text('Go to  Preview Before Applying'),
+            ),
           ],
         ),
       ),
