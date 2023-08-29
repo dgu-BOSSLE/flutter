@@ -15,8 +15,12 @@ class PreviewBeforeApplyingScreen extends StatefulWidget {
 
 class _PreviewBeforeApplyingScreenState extends State<PreviewBeforeApplyingScreen> {
   late InAppWebViewController _webViewController;
-  final String websiteUrl = 'https://9573-61-72-189-152.ngrok-free.app/';
-
+  final List<String> websiteUrls = [
+    'https://6e78-61-72-189-152.ngrok-free.app',
+    'https://6e78-61-72-189-152.ngrok-free.app',
+    'https://6e78-61-72-189-152.ngrok-free.app',
+  ];
+  int currentIndex = 0;
   @override
   void initState() {
     super.initState();
@@ -53,7 +57,7 @@ class _PreviewBeforeApplyingScreenState extends State<PreviewBeforeApplyingScree
             ),
             Expanded(
               child: InAppWebView(
-                initialUrlRequest: URLRequest(url: Uri.parse(websiteUrl)),
+                initialUrlRequest: URLRequest(url: Uri.parse(websiteUrls[currentIndex])),
                 onWebViewCreated: (controller) {
                   _webViewController = controller;
                 },
@@ -61,10 +65,15 @@ class _PreviewBeforeApplyingScreenState extends State<PreviewBeforeApplyingScree
                   print(consoleMessage);
                 },
                 onLoadStop: (controller, url) {
+                  int currentFileIndex = currentIndex; // Save the currentIndex before incrementing
                   controller.addJavaScriptHandler(
                       handlerName: "videoCreated",
                       callback: (args) {
-                        _handleDownload(args[0]);
+                        _handleDownload(args[0], currentFileIndex);
+                        if (currentIndex < websiteUrls.length - 1) {
+                          currentIndex++;
+                          controller.loadUrl(urlRequest: URLRequest(url: Uri.parse(websiteUrls[currentIndex])));
+                        }
                       }
                   );
                 },
@@ -76,7 +85,8 @@ class _PreviewBeforeApplyingScreenState extends State<PreviewBeforeApplyingScree
     );
   }
 
-  Future<void> _handleDownload(String dataUri) async {
+
+  Future<void> _handleDownload(String dataUri, int fileIndex) async {
     try {
       // Split the header from the rest of the URI
       final String encodedStr = dataUri.split(",")[1];
@@ -85,7 +95,7 @@ class _PreviewBeforeApplyingScreenState extends State<PreviewBeforeApplyingScree
       final decodedBytes = base64Decode(encodedStr);
 
       var dir = await getApplicationDocumentsDirectory();
-      var file = File('${dir.path}/rain.mp4');
+      var file = File('${dir.path}/rain$fileIndex.mp4');
       await file.writeAsBytes(decodedBytes);
 
       print("File saved at ${file.path}");
@@ -113,6 +123,7 @@ class _PreviewBeforeApplyingScreenState extends State<PreviewBeforeApplyingScree
       print("Error: $e");
     }
   }
+
 
 
 
