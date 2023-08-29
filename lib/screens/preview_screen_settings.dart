@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'dart:convert';
 
 void main() => runApp(MyApp());
 
@@ -21,9 +22,8 @@ class MyApp extends StatelessWidget {
 class PreviewScreenSettingsScreen extends StatefulWidget {
   final File? imageFile;
   final String SnowWebsiteUrl = 'https://f7e8-61-102-174-151.ngrok-free.app';
-  final String RainWebsiteUrl = 'https://db22-61-72-189-152.ngrok-free.app';
-
-  PreviewScreenSettingsScreen({required this.imageFile});
+  final String RainWebsiteUrl = 'https://graceful-souffle-034b9b.netlify.app';
+  PreviewScreenSettingsScreen({this.imageFile});
 
   @override
   _PreviewScreenSettingsScreenState createState() =>
@@ -39,9 +39,13 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
   bool _showSnowScreen = false;
   bool _showRainScreen = false;
   bool _showSunScreen = false;
+  String base64Image = "";
 
   @override
   Widget build(BuildContext context) {
+    if (widget.imageFile != null) {
+      base64Image = base64Encode(widget.imageFile!.readAsBytesSync());
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Preview Screen Settings'),
@@ -57,6 +61,7 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
           ),
           if (_showRainScreen) RainPreview(
             rainWebsiteUrl: widget.RainWebsiteUrl,
+            base64Image: base64Image,
             sliderValue: _rainSliderValue,
             onWebViewCreated: (controller) {
               _rainWebViewController = controller;
@@ -249,8 +254,10 @@ class RainPreview extends StatelessWidget {
   final Function(InAppWebViewController) onWebViewCreated;
   final String rainWebsiteUrl;
   final double sliderValue;
+  final String base64Image;
 
-  RainPreview({required this.onWebViewCreated, required this.rainWebsiteUrl, required this.sliderValue});
+
+  RainPreview({required this.onWebViewCreated, required this.rainWebsiteUrl, required this.sliderValue, required this.base64Image,});
 
   @override
   Widget build(BuildContext context) {
@@ -259,7 +266,8 @@ class RainPreview extends StatelessWidget {
       onWebViewCreated: onWebViewCreated,
       onLoadStop: (controller, url) {
         controller.evaluateJavascript(source: 'setGlobalDropletIntensity($sliderValue);');
-      },
+        controller.evaluateJavascript(source: 'displayImage("$base64Image");');
+        },
     );
   }
 }
