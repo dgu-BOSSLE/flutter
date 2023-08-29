@@ -9,10 +9,12 @@ class PreviewScreenSettingsScreen extends StatefulWidget {
   PreviewScreenSettingsScreen({required this.imageFile});
 
   @override
-  _PreviewScreenSettingsScreenState createState() => _PreviewScreenSettingsScreenState();
+  _PreviewScreenSettingsScreenState createState() =>
+      _PreviewScreenSettingsScreenState();
 }
 
-class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScreen> {
+class _PreviewScreenSettingsScreenState
+    extends State<PreviewScreenSettingsScreen> {
   double _sliderValue = 50;
   late InAppWebViewController _webViewController;
   ButtonStyle customButtonStyle(Color color) {
@@ -22,7 +24,8 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10), // Button border radius
       ),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Button padding
+      padding:
+          EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Button padding
     );
   }
 
@@ -60,7 +63,7 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                 ),
                 border: Border.all(
                   color: Colors.white,
-                  width: 0.3,  // You can adjust the width as needed
+                  width: 0.3, // You can adjust the width as needed
                 ),
               ),
               height: 200,
@@ -78,7 +81,6 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                           primary: Colors.blue, // Default blue color
                         ),
                       ),
-
                       ElevatedButton(
                         onPressed: () {
                           // Add your button's onPressed logic here
@@ -88,7 +90,6 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                           primary: Colors.blue, // Default blue color
                         ),
                       ),
-
                       ElevatedButton(
                         onPressed: () {
                           // Add your button's onPressed logic here
@@ -98,11 +99,8 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                           primary: Colors.blue, // Default blue color
                         ),
                       ),
-
                     ],
                   ),
-
-
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Row(
@@ -116,7 +114,9 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                               setState(() {
                                 _sliderValue = value;
                               });
-                              _webViewController.evaluateJavascript(source: 'setGlobalDropletIntensity($_sliderValue);');
+                              _webViewController.evaluateJavascript(
+                                  source:
+                                      'setGlobalDropletIntensity($_sliderValue);');
                             },
                             min: 0,
                             max: 100,
@@ -136,6 +136,4 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
       ),
     );
   }
-
 }
-

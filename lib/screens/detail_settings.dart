@@ -49,7 +49,6 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
               ElevatedButton(onPressed: null, child: Text('현재 바탕화면')),
             ]),
             SizedBox(height: 16.0),
-
             CustomCard(title: '날씨 동기화', content: [
               Text('안함'),
               Switch(
@@ -63,13 +62,14 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
               Text('동기화'),
             ]),
             SizedBox(height: 16.0),
-
             CustomCard(title: '선택한 날씨만 활성화', content: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children:[
-                  SvgPicture.asset('assets/icons/icon_sunny.svg',
-                    width: 40, height: 40,
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/icon_sunny.svg',
+                    width: 40,
+                    height: 40,
                   ),
                   Checkbox(
                     value: _sunny,
@@ -81,12 +81,13 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                   ),
                 ],
               ),
-
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children:[
-                  SvgPicture.asset('assets/icons/icon_rainy.svg',
-                    width: 40, height: 40,
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/icon_rainy.svg',
+                    width: 40,
+                    height: 40,
                   ),
                   Checkbox(
                     value: _rainy,
@@ -98,12 +99,13 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                   ),
                 ],
               ),
-
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children:[
-                  SvgPicture.asset('assets/icons/icon_rainy_hard.svg',
-                    width: 40, height: 40,
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/icon_rainy_hard.svg',
+                    width: 40,
+                    height: 40,
                   ),
                   Checkbox(
                     value: _rainy_hard,
@@ -115,12 +117,13 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                   ),
                 ],
               ),
-
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children:[
-                  SvgPicture.asset('assets/icons/icon_snowy.svg',
-                    width: 40, height: 40,
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/icon_snowy.svg',
+                    width: 40,
+                    height: 40,
                   ),
                   Checkbox(
                     value: _snowy,
@@ -134,13 +137,17 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
               ),
             ]),
             SizedBox(height: 16.0),
-
-            ElevatedButton(onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => PreviewScreenSettingsScreen(imageFile: _selectedImage)),  //context로 이미지 전달하며 프리뷰로 이동!
-              );
-            }, child: Text('효과 설정 미리보기')),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PreviewScreenSettingsScreen(
+                            imageFile:
+                                _selectedImage)), //context로 이미지 전달하며 프리뷰로 이동!
+                  );
+                },
+                child: Text('효과 설정 미리보기')),
           ],
         ),
       ),
@@ -173,7 +180,6 @@ class CustomCard extends StatelessWidget {
               children: content,
             )
           ],
-
         ),
       ),
     );

@@ -1,8 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.LOCATION_HARDWARE"/>
     <application
+=======
+
+
+    <application android:requestLegacyExternalStorage="true"
+
+>>>>>>> Hwang/videoSave
         android:label="picture"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
