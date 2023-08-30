@@ -85,7 +85,7 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                   width: 0.3,
                 ),
               ),
-              height: 200,
+              height: 230, // Adjusted height to fit the new button
               child: Column(
                 children: [
                   Row(
@@ -122,6 +122,22 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                         child: Text("햇빛 화면"),
                       ),
                     ],
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ResultScreen(
+                            snowValue: _snowSliderValue,
+                            rainValue: _rainSliderValue,
+                            snowSpeed: _snowSpeedValue,
+                            base64Image: base64Image,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Text("결과값 확인하기"),
                   ),
                   if (_showRainScreen)
                     Padding(
@@ -227,6 +243,34 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// 이건 결과값 보려고 만든겁니다.
+class ResultScreen extends StatelessWidget {
+  final double snowValue;
+  final double rainValue;
+  final double snowSpeed;
+  final String base64Image;
+
+  ResultScreen({required this.snowValue, required this.rainValue, required this.snowSpeed, required this.base64Image});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Result Screen")),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Snow Value: $snowValue"),
+            Text("Rain Value: $rainValue"),
+            Text("Snow Speed: $snowSpeed"),
+            Image.memory(base64Decode(base64Image)),
+          ],
+        ),
       ),
     );
   }
