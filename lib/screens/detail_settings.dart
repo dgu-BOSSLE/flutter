@@ -43,7 +43,7 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
               if (_selectedImage != null)
                 Image.file(
                   _selectedImage!,
-                  height: 200,
+                  height: 150,
                 ),
               ElevatedButton(onPressed: _pickImage, child: Text('갤러리')),
               ElevatedButton(onPressed: null, child: Text('현재 바탕화면')),
@@ -148,7 +148,7 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                   );
                 },
                 child: Text('효과 설정 미리보기')),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(

@@ -1,12 +1,12 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:io';
 import 'dart:convert';
+import 'dart:math';
 import 'package:http/http.dart' as http;
-
-import 'dart:convert';
 
 class PreviewBeforeApplyingScreen extends StatefulWidget {
   @override
@@ -18,11 +18,15 @@ class _PreviewBeforeApplyingScreenState
     extends State<PreviewBeforeApplyingScreen> {
   late InAppWebViewController _webViewController;
   final List<String> websiteUrls = [
-    'https://6e78-61-72-189-152.ngrok-free.app',
-    'https://6e78-61-72-189-152.ngrok-free.app',
-    'https://6e78-61-72-189-152.ngrok-free.app',
+    'https://graceful-souffle-034b9b.netlify.app',
+    'https://graceful-souffle-034b9b.netlify.app',
+    'https://graceful-souffle-034b9b.netlify.app',
   ];
   int currentIndex = 0;
+  final List<String> randomMessages = [
+    "배경화면 생성중...",
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -55,13 +59,14 @@ class _PreviewBeforeApplyingScreenState
               onPressed: () {
                 _webViewController.evaluateJavascript(
                     source: 'window.isButtonPressed = true;');
+                _showRandomPopup();
               },
               child: Text('적용', style: TextStyle(fontSize: 16)),
             ),
             Expanded(
               child: InAppWebView(
                 initialUrlRequest:
-                    URLRequest(url: Uri.parse(websiteUrls[currentIndex])),
+                URLRequest(url: Uri.parse(websiteUrls[currentIndex])),
                 onWebViewCreated: (controller) {
                   _webViewController = controller;
                 },
@@ -90,6 +95,55 @@ class _PreviewBeforeApplyingScreenState
       ),
     );
   }
+
+  _showRandomPopup() {
+    int randomIndex = Random().nextInt(randomMessages.length);
+
+    List<String> cuteGifs = [
+      'https://media3.giphy.com/media/Gv8ssNe0ayE6JW9ZMB/giphy.gif?cid=ecf05e479lkslmdj7skebevo0nzdks4rj0u7y586kvlqx0bl&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+      'https://media2.giphy.com/media/YxA2PPkXbwRTa/giphy.gif?cid=ecf05e47q7trvnhs4wp5zcpfqsp7omptsv7kye0sj4kv0fqg&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+      'https://media4.giphy.com/media/JHCcEc9vLvHZS/giphy.gif?cid=ecf05e47qosjwh0etp1ixt5f0db4ed89bizze50f0ysxruee&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+      'https://media2.giphy.com/media/mnIjWW97Jn9mg/giphy.gif?cid=ecf05e47q789b5b2206gjovf9wjnkrqcyvkw5txxp45mvobf&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+      'https://media4.giphy.com/media/12oeJpFwY3zYwU/giphy.gif?cid=ecf05e479er7pzqtgh9o06p2oqb6ojmiecu9phg5aw1ehehe&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+      'https://media2.giphy.com/media/VxbvpfaTTo3le/giphy.gif?cid=ecf05e47sooruh9gqei0uef6s2m2chd7fuv3ly8iaw1djiq8&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+    ];
+    int randomGifIndex = Random().nextInt(cuteGifs.length);
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        Future.delayed(Duration(seconds: 10), () {
+          Navigator.of(context).pop();
+        });
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20), // 팝업창 모서리 둥글게
+          ),
+          elevation: 16,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  randomMessages[randomIndex],
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.blueGrey),
+                ),
+                SizedBox(height: 20), // 텍스트와 움짤 사이 간격
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Image.network(cuteGifs[randomGifIndex], fit: BoxFit.cover),  // 귀여운 움짤에 패딩 추가
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
 
   Future<void> _handleDownload(String dataUri, int fileIndex) async {
     try {
