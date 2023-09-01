@@ -51,7 +51,7 @@ class _PreviewBeforeApplyingScreenState
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'This is the Apply Screen',
+              '배경화면 만들기',
               style: TextStyle(fontSize: 18),
             ),
             SizedBox(height: 20),

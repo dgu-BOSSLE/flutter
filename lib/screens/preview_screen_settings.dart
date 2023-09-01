@@ -248,7 +248,7 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
   }
 }
 
-// 이건 결과값 보려고 만든겁니다.
+// 결과값 보려고 만든겁니다. -> 나중에 로직 추가하거나 지우기..?
 class ResultScreen extends StatelessWidget {
   final double snowValue;
   final double rainValue;
@@ -318,6 +318,7 @@ class RainPreview extends StatelessWidget {
   }
 }
 
+// 나중에 햇빛 로직 추가하기
 class SunPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

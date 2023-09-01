@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => DetailSettingsScreen()),
                 );
               },
-              child: Text('Go to Detail Settings'), //(바탕화면 바꾸기)세부설정
+              child: Text('바탕화면 세부설정 및 바꾸기'),
             ),
             ElevatedButton(
               onPressed: () {
@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => PresetListScreen()),
                 );
               },
-              child: Text('Go to Preset List'), //내프리셋
+              child: Text('내 프리셋'),
             ),
           ],
         ),
