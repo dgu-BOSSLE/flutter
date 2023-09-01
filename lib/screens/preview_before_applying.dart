@@ -96,9 +96,61 @@ class _PreviewBeforeApplyingScreenState
     );
   }
 
+  // _showRandomPopup() {
+  //   int randomIndex = Random().nextInt(randomMessages.length);
+  //
+  //   List<String> cuteGifs = [
+  //     'https://media3.giphy.com/media/Gv8ssNe0ayE6JW9ZMB/giphy.gif?cid=ecf05e479lkslmdj7skebevo0nzdks4rj0u7y586kvlqx0bl&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+  //     'https://media2.giphy.com/media/YxA2PPkXbwRTa/giphy.gif?cid=ecf05e47q7trvnhs4wp5zcpfqsp7omptsv7kye0sj4kv0fqg&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+  //     'https://media4.giphy.com/media/JHCcEc9vLvHZS/giphy.gif?cid=ecf05e47qosjwh0etp1ixt5f0db4ed89bizze50f0ysxruee&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+  //     'https://media2.giphy.com/media/mnIjWW97Jn9mg/giphy.gif?cid=ecf05e47q789b5b2206gjovf9wjnkrqcyvkw5txxp45mvobf&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+  //     'https://media4.giphy.com/media/12oeJpFwY3zYwU/giphy.gif?cid=ecf05e479er7pzqtgh9o06p2oqb6ojmiecu9phg5aw1ehehe&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+  //     'https://media2.giphy.com/media/VxbvpfaTTo3le/giphy.gif?cid=ecf05e47sooruh9gqei0uef6s2m2chd7fuv3ly8iaw1djiq8&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+  //   ];
+  //   int randomGifIndex = Random().nextInt(cuteGifs.length);
+  //
+  //   int counter = 10;
+  //   Stream<int> timerStream = Stream.periodic(Duration(seconds: 1), (i) {
+  //     return counter - i;
+  //   }).take(counter);
+  //
+  //   showDialog(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (BuildContext context) {
+  //       Future.delayed(Duration(seconds: 10), () {
+  //         Navigator.of(context).pop();
+  //       });
+  //       return Dialog(
+  //         shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.circular(20), // 팝업창 모서리 둥글게
+  //         ),
+  //         elevation: 16,
+  //         child: Padding(
+  //           padding: const EdgeInsets.all(16.0),
+  //           child: Column(
+  //             mainAxisSize: MainAxisSize.min,
+  //             mainAxisAlignment: MainAxisAlignment.center,
+  //             children: [
+  //               Text(
+  //                 randomMessages[randomIndex],
+  //                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.blueGrey),
+  //               ),
+  //               SizedBox(height: 20), // 텍스트와 움짤 사이 간격
+  //               Padding(
+  //                 padding: const EdgeInsets.symmetric(vertical: 10.0),
+  //                 child: Image.network(cuteGifs[randomGifIndex], fit: BoxFit.cover),  // 귀여운 움짤에 패딩 추가
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
+
   _showRandomPopup() {
     int randomIndex = Random().nextInt(randomMessages.length);
-
     List<String> cuteGifs = [
       'https://media3.giphy.com/media/Gv8ssNe0ayE6JW9ZMB/giphy.gif?cid=ecf05e479lkslmdj7skebevo0nzdks4rj0u7y586kvlqx0bl&ep=v1_gifs_search&rid=giphy.gif&ct=g',
       'https://media2.giphy.com/media/YxA2PPkXbwRTa/giphy.gif?cid=ecf05e47q7trvnhs4wp5zcpfqsp7omptsv7kye0sj4kv0fqg&ep=v1_gifs_search&rid=giphy.gif&ct=g',
@@ -109,39 +161,76 @@ class _PreviewBeforeApplyingScreenState
     ];
     int randomGifIndex = Random().nextInt(cuteGifs.length);
 
+    Timer? countdownTimer; // 타이머 변수 추가
+    int counter = 9;
+    StreamController<int> streamController = StreamController<int>();
+
     showDialog(
       context: context,
-      barrierDismissible: false,
+      barrierDismissible: true,
       builder: (BuildContext context) {
-        Future.delayed(Duration(seconds: 10), () {
-          Navigator.of(context).pop();
-        });
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20), // 팝업창 모서리 둥글게
-          ),
-          elevation: 16,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  randomMessages[randomIndex],
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.blueGrey),
+        return StreamBuilder<int>(
+          stream: streamController.stream,
+          initialData: counter,
+          builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+            if (snapshot.data! <= 0) {
+              return SizedBox.shrink();
+            }
+
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              elevation: 16,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          randomMessages[randomIndex],
+                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.blueGrey),
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          snapshot.data.toString(),
+                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.blueGrey),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: Image.network(cuteGifs[randomGifIndex], fit: BoxFit.cover),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 20), // 텍스트와 움짤 사이 간격
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: Image.network(cuteGifs[randomGifIndex], fit: BoxFit.cover),  // 귀여운 움짤에 패딩 추가
-                ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         );
       },
-    );
+    ).then((_) {
+      countdownTimer?.cancel();
+      streamController.close();
+    });
+
+    countdownTimer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      if (counter < 1) {
+        timer.cancel();
+        streamController.close();
+        Navigator.of(context, rootNavigator: true).pop();  // 이 부분을 타이머 내부로 이동
+      } else {
+        if (!streamController.isClosed) {
+          streamController.add(counter);
+        }
+        counter--;
+      }
+    });
   }
 
 
