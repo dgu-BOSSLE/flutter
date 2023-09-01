@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -21,9 +22,9 @@ class MyApp extends StatelessWidget {
 
 class PreviewScreenSettingsScreen extends StatefulWidget {
   final File? imageFile;
-  final String SnowWebsiteUrl = 'https://f7e8-61-102-174-151.ngrok-free.app';
+  final String SnowWebsiteUrl = 'https://resilient-bienenstitch-cfe484.netlify.app';
   final String RainWebsiteUrl = 'https://graceful-souffle-034b9b.netlify.app';
-  PreviewScreenSettingsScreen({this.imageFile});
+  PreviewScreenSettingsScreen({required this.imageFile});
 
   @override
   _PreviewScreenSettingsScreenState createState() =>
@@ -55,6 +56,7 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
           if (_showSnowScreen) SnowPreview(
             snowWebsiteUrl: widget.SnowWebsiteUrl,
             sliderValue: _snowSliderValue,
+            base64Image: base64Image,
             onWebViewCreated: (controller) {
               _snowWebViewController = controller;
             },
@@ -84,7 +86,7 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                   width: 0.3,
                 ),
               ),
-              height: 200,
+              height: 230, // Adjusted height to fit the new button
               child: Column(
                 children: [
                   Row(
@@ -121,6 +123,22 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                         child: Text("햇빛 화면"),
                       ),
                     ],
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ResultScreen(
+                            snowValue: _snowSliderValue,
+                            rainValue: _rainSliderValue,
+                            snowSpeed: _snowSpeedValue,
+                            base64Image: base64Image,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Text("결과값 확인하기"),
                   ),
                   if (_showRainScreen)
                     Padding(
@@ -231,12 +249,41 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
   }
 }
 
+// 결과값 보려고 만든겁니다. -> 나중에 로직 추가하거나 지우기..?
+class ResultScreen extends StatelessWidget {
+  final double snowValue;
+  final double rainValue;
+  final double snowSpeed;
+  final String base64Image;
+
+  ResultScreen({required this.snowValue, required this.rainValue, required this.snowSpeed, required this.base64Image});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Result Screen")),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Snow Value: $snowValue"),
+            Text("Rain Value: $rainValue"),
+            Text("Snow Speed: $snowSpeed"),
+            Image.memory(base64Decode(base64Image)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class SnowPreview extends StatelessWidget {
   final Function(InAppWebViewController) onWebViewCreated;
   final String snowWebsiteUrl;
   final double sliderValue;
+  final String base64Image;
 
-  SnowPreview({required this.onWebViewCreated, required this.snowWebsiteUrl, required this.sliderValue});
+  SnowPreview({required this.onWebViewCreated, required this.snowWebsiteUrl, required this.sliderValue, required this.base64Image,});
 
   @override
   Widget build(BuildContext context) {
@@ -245,6 +292,7 @@ class SnowPreview extends StatelessWidget {
       onWebViewCreated: onWebViewCreated,
       onLoadStop: (controller, url) {
         controller.evaluateJavascript(source: 'setSnowDensity($sliderValue);');
+        controller.evaluateJavascript(source: 'displayImage("$base64Image");');
       },
     );
   }
@@ -256,7 +304,6 @@ class RainPreview extends StatelessWidget {
   final double sliderValue;
   final String base64Image;
 
-
   RainPreview({required this.onWebViewCreated, required this.rainWebsiteUrl, required this.sliderValue, required this.base64Image,});
 
   @override
@@ -267,11 +314,12 @@ class RainPreview extends StatelessWidget {
       onLoadStop: (controller, url) {
         controller.evaluateJavascript(source: 'setGlobalDropletIntensity($sliderValue);');
         controller.evaluateJavascript(source: 'displayImage("$base64Image");');
-        },
+      },
     );
   }
 }
 
+// 나중에 햇빛 로직 추가하기
 class SunPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

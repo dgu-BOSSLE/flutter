@@ -6,6 +6,9 @@ import 'preview_screen_settings.dart';
 import 'preview_before_applying.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+// 사진 정렬 다시하기?
+// 색깔 톤 보라색으로 바꾸고 자잘한 글자 내용들 수정
+
 class DetailSettingsScreen extends StatefulWidget {
   @override
   _DetailSettingsState createState() => _DetailSettingsState();
@@ -43,12 +46,12 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
               if (_selectedImage != null)
                 Image.file(
                   _selectedImage!,
-                  height: 200,
+                  height: 150,
                 ),
               ElevatedButton(onPressed: _pickImage, child: Text('갤러리')),
               ElevatedButton(onPressed: null, child: Text('현재 바탕화면')),
             ]),
-            SizedBox(height: 16.0),
+            SizedBox(height: 9.0),
             CustomCard(title: '날씨 동기화', content: [
               Text('안함'),
               Switch(
@@ -61,7 +64,7 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
               ),
               Text('동기화'),
             ]),
-            SizedBox(height: 16.0),
+            SizedBox(height: 9.0),
             CustomCard(title: '선택한 날씨만 활성화', content: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -136,7 +139,7 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                 ],
               ),
             ]),
-            SizedBox(height: 16.0),
+            SizedBox(height: 9.0),
             ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -148,7 +151,7 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                   );
                 },
                 child: Text('효과 설정 미리보기')),
-            SizedBox(height: 20),
+            SizedBox(height: 9),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
