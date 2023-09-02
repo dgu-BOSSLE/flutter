@@ -5,6 +5,7 @@ import 'dart:io';
 import 'preview_screen_settings.dart';
 import 'preview_before_applying.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart'; // 추가
 
 // 사진 정렬 다시하기?
 // 색깔 톤 보라색으로 바꾸고 자잘한 글자 내용들 수정
@@ -36,21 +37,41 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('설정')),
+      appBar: AppBar(title: Text('설정', style: GoogleFonts.notoSans(),),
+      ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            CustomCard(title: '바탕화면 선택', content: [
-              if (_selectedImage != null)
-                Image.file(
-                  _selectedImage!,
-                  height: 150,
-                ),
-              ElevatedButton(onPressed: _pickImage, child: Text('갤러리')),
-              ElevatedButton(onPressed: null, child: Text('현재 바탕화면')),
-            ]),
+            CustomCard(
+              title: '바탕화면 선택',
+              content: [
+                ElevatedButton(onPressed: _pickImage, child: Text('갤러리')),
+                SizedBox(width: 10.0),
+                // ElevatedButton(onPressed: null, child: Text('현재 바탕화면')),
+                SizedBox(width: 10.0), // 추가한 부분
+                if (_selectedImage != null) ...[
+                  Column( // 추가한 부분
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                content: Image.file(_selectedImage!),
+                              );
+                            },
+                          );
+                        },
+                        child: Text('사진 확인'),
+                      ),
+                    ],
+                  ),
+                ],
+              ],
+            ),
             SizedBox(height: 9.0),
             CustomCard(title: '날씨 동기화', content: [
               Text('안함'),
@@ -185,7 +206,10 @@ class CustomCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              style: GoogleFonts.notoSans(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(height: 8.0),
             Row(

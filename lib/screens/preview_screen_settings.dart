@@ -4,21 +4,8 @@ import 'dart:io';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'dart:convert';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Preview Screen App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: PreviewScreenSettingsScreen(imageFile: null),
-    );
-  }
-}
+const seedColor = Color(0xFFC8A2C8);
+const outPadding = 5.0;
 
 class PreviewScreenSettingsScreen extends StatefulWidget {
   final File? imageFile;
@@ -82,10 +69,11 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                   topRight: Radius.circular(50.0),
                 ),
                 border: Border.all(
-                  color: Colors.white,
-                  width: 0.3,
+                  color: seedColor,
+                  width: 1,
                 ),
               ),
+              padding: EdgeInsets.all(outPadding), // outPadding 적용
               height: 230, // Adjusted height to fit the new button
               child: Column(
                 children: [
@@ -142,11 +130,11 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                   ),
                   if (_showRainScreen)
                     Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('0%'),
+                          Text('0%', style: TextStyle(color: Colors.white)),
                           Expanded(
                             child: Slider(
                               value: _rainSliderValue,
@@ -162,7 +150,7 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                               label: '${_rainSliderValue.round()}%',
                             ),
                           ),
-                          Text('100%'),
+                          Text('100%', style: TextStyle(color: Colors.white)),
                         ],
                       ),
                     ),
@@ -171,13 +159,11 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                       children: [
                         // 눈 양 조절 슬라이더
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(5.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                color: Colors.blue,
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                 child: Text('눈 갯수 0%', style: TextStyle(color: Colors.white)),
                               ),
                               Expanded(
@@ -196,8 +182,6 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                                 ),
                               ),
                               Container(
-                                color: Colors.blue,
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                 child: Text('100%', style: TextStyle(color: Colors.white)),
                               ),
                             ],
@@ -205,13 +189,11 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                         ),
                         // 눈 속도 조절 슬라이더
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(5.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                color: Colors.blue,
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                 child: Text('눈 속도 0%', style: TextStyle(color: Colors.white)),
                               ),
                               Expanded(
@@ -230,8 +212,6 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                                 ),
                               ),
                               Container(
-                                color: Colors.blue,
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                 child: Text('100%', style: TextStyle(color: Colors.white)),
                               ),
                             ],

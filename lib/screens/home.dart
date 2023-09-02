@@ -42,47 +42,49 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Home Screen'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DetailSettingsScreen()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                primary: seedColor,
-                onPrimary: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: outPadding, vertical: 15),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.end, // 변경된 부분
+        children: <Widget>[
+          Spacer(),
+          Image.asset('assets/Bossle.png', fit: BoxFit.cover), // 추가된 부분
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DetailSettingsScreen()),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              primary: seedColor,
+              onPrimary: Colors.black,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
               ),
-              child: Text('바탕화면 세부설정 및 바꾸기'),
+              padding: EdgeInsets.symmetric(horizontal: outPadding, vertical: 15),
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PresetListScreen()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                primary: seedColor,
-                onPrimary: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: outPadding, vertical: 15),
+            child: Text('바탕화면 세부설정 및 바꾸기'),
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PresetListScreen()),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              primary: seedColor,
+              onPrimary: Colors.black,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
               ),
-              child: Text('내 프리셋'),
+              padding: EdgeInsets.symmetric(horizontal: outPadding, vertical: 15),
             ),
-          ],
-        ),
+            child: Text('내 프리셋'),
+          ),
+          SizedBox(height: 50), // 추가된 부분
+        ],
       ),
     );
   }
@@ -113,9 +115,13 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Image.asset('assets/Bossle.png', fit: BoxFit.cover),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/Bossle.png', fit: BoxFit.cover),
+          ],
+        ),
       ),
     );
   }
 }
-
