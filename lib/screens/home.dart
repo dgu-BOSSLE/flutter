@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 void main() => runApp(MyApp());
 
-const seedColor = Color(0xFFC8A2C8);
+const seedColor = Color(0xFF5CE1E6);
 const outPadding = 32.0;
 
 class MyApp extends StatelessWidget {
@@ -46,8 +46,7 @@ class HomeScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end, // 변경된 부분
         children: <Widget>[
           Spacer(),
-          Image.asset('assets/Bossle.png', fit: BoxFit.cover), // 추가된 부분
-          SizedBox(height: 20),
+          Image.asset('assets/Bossle1.png', fit: BoxFit.cover), // 추가된 부분
           ElevatedButton(
             onPressed: () {
               Navigator.push(
@@ -65,7 +64,7 @@ class HomeScreen extends StatelessWidget {
             ),
             child: Text('바탕화면 세부설정 및 바꾸기'),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 30),
           ElevatedButton(
             onPressed: () {
               Navigator.push(
@@ -83,7 +82,7 @@ class HomeScreen extends StatelessWidget {
             ),
             child: Text('내 프리셋'),
           ),
-          SizedBox(height: 50), // 추가된 부분
+          SizedBox(height: 80), // 추가된 부분
         ],
       ),
     );
@@ -118,7 +117,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/Bossle.png', fit: BoxFit.cover),
+            Image.asset('assets/Bossle1.png', fit: BoxFit.cover),
           ],
         ),
       ),

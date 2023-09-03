@@ -7,6 +7,9 @@ import 'dart:io';
 import 'dart:convert';
 import 'dart:math';
 import 'package:http/http.dart' as http;
+import 'package:google_fonts/google_fonts.dart';
+
+const seedColor = Color(0xFF5CE1E6);
 
 class PreviewBeforeApplyingScreen extends StatefulWidget {
   @override
@@ -44,26 +47,47 @@ class _PreviewBeforeApplyingScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Apply Screen'),
+        title: Text('Apply Screen', style: GoogleFonts.notoSans(),),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              '배경화면 만들기',
-              style: TextStyle(fontSize: 18),
+          Text(
+          '배경화면 만들기',
+            style: GoogleFonts.notoSans(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),  // Google 폰트 적용
+        ),
+        SizedBox(height: 40),
+        Card(
+          elevation: 8,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: ElevatedButton(
+            onPressed: () {
+              _webViewController.evaluateJavascript(
+                  source: 'window.isButtonPressed = true;');
+              _showRandomPopup();
+            },
+            style: ElevatedButton.styleFrom(
+              primary: seedColor,
+              onPrimary: Colors.black,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                _webViewController.evaluateJavascript(
-                    source: 'window.isButtonPressed = true;');
-                _showRandomPopup();
-              },
-              child: Text('적용', style: TextStyle(fontSize: 16)),
+            child: Text('적용',  style: GoogleFonts.notoSans(fontSize: 16),) // Google 폰트 적용),
+          ),
+        ),
+        SizedBox(height: 20),
+        Expanded(
+          child: Card(
+            elevation: 8,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
             ),
-            Expanded(
               child: InAppWebView(
                 initialUrlRequest:
                 URLRequest(url: Uri.parse(websiteUrls[currentIndex])),
@@ -90,6 +114,7 @@ class _PreviewBeforeApplyingScreenState
                 },
               ),
             ),
+           ),
           ],
         ),
       ),
@@ -125,6 +150,7 @@ class _PreviewBeforeApplyingScreenState
             }
 
             return Dialog(
+              backgroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
@@ -140,12 +166,12 @@ class _PreviewBeforeApplyingScreenState
                       children: [
                         Text(
                           randomMessages[randomIndex],
-                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.blueGrey),
+                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
                         ),
                         SizedBox(width: 10),
                         Text(
                           snapshot.data.toString(),
-                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.blueGrey),
+                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
                         ),
                       ],
                     ),
@@ -200,11 +226,12 @@ class _PreviewBeforeApplyingScreenState
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Colors.white,
             title: Text('알림'),
-            content: Text('배경화면이 저장되었습니다!'),
+            content: Text('배경화면이 저장돼었습니다!'),
             actions: [
               TextButton(
-                child: Text('확인'),
+                child: Text('확인', style: TextStyle(color: Colors.black)),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
