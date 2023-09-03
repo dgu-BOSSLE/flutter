@@ -32,15 +32,22 @@ class _ApiCallOnTimeState extends State<ApiCallOnTime> {
   }
 
   Future<void> callApi() async {
-    final response = await http.get(Uri.parse('https://helpp.free.beeceptor.com/todos'));
+    final now = DateTime.now();
+    final startTime = DateTime(now.year, now.month, now.day, 3);
+    final endTime = DateTime(now.year, now.month, now.day, 3,40);
 
-    if (response.statusCode == 200) {
-      print('API call success: ${response.body}');
+    if (now.isAfter(startTime) && now.isBefore(endTime)) {
+      final response = await http.get(Uri.parse('https://helpp.free.beeceptor.com/todos'));
+
+      if (response.statusCode == 200) {
+        print('API call success: ${response.body}');
+      } else {
+        print('API call failed: ${response.statusCode}');
+      }
     } else {
-      print('API call failed: ${response.statusCode}');
+      print('Not time to call API yet');
     }
   }
-
 
   @override
   void dispose() {
