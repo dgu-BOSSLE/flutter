@@ -1,37 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:workmanager/workmanager.dart';
-
-void myTask() {
-  callApi();
-}
-
-Future<void> callApi() async {
-  final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
-
-  if (response.statusCode == 200) {
-    print('API call success: ${response.body}');
-  } else {
-    print('API call failed: ${response.statusCode}');
-  }
-}
-
-void callbackDispatcher() {
-  Workmanager().executeTask((task, inputData) {
-    myTask();
-    return Future.value(true);
-  });
-}
-
-void main() {
-  runApp(MyApp());
-  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
-  Workmanager().registerPeriodicTask(
-    '1',
-    'simplePeriodicTask',
-    frequency: Duration(minutes: 15),
-  );
-}
+import 'dart:async';
 
 class MyApp extends StatelessWidget {
   @override
@@ -53,10 +22,40 @@ class ApiCallOnTime extends StatefulWidget {
 }
 
 class _ApiCallOnTimeState extends State<ApiCallOnTime> {
+  String _apiResponse = 'API Call on Time in Background';
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(Duration(minutes: 15), (timer) => callApi());
+  }
+
+  Future<void> callApi() async {
+    final response = await http.get(Uri.parse('https://helpp.free.beeceptor.com/todos'));
+
+    if (response.statusCode == 200) {
+      print('API call success: ${response.body}');
+    } else {
+      print('API call failed: ${response.statusCode}');
+    }
+  }
+
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('API Call on Time in Background'),
+      child: Text(_apiResponse),
     );
   }
+}
+
+void main() {
+  runApp(MyApp());
 }
