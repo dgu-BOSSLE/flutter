@@ -42,7 +42,7 @@ class _PreviewBeforeApplyingScreenState
       await Permission.storage.request();
     }
   }
-
+//
   @override
   Widget build(BuildContext context) {
     return Scaffold(
