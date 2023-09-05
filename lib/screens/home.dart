@@ -3,9 +3,11 @@ import 'detail_settings.dart';
 import 'preset_list.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// 배경화면 흰색으로 바꾸기
+
 void main() => runApp(MyApp());
 
-const seedColor = Color(0xFF5CE1E6);
+const seedColor = Color(0xFFA3DAFF);
 const outPadding = 32.0;
 
 class MyApp extends StatelessWidget {
@@ -46,7 +48,7 @@ class HomeScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end, // 변경된 부분
         children: <Widget>[
           Spacer(),
-          Image.asset('assets/Bossle1.png', fit: BoxFit.cover), // 추가된 부분
+          Image.asset('assets/Bossle3.png', fit: BoxFit.cover), // 추가된 부분
           ElevatedButton(
             onPressed: () {
               Navigator.push(
@@ -117,7 +119,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/Bossle1.png', fit: BoxFit.cover),
+            Image.asset('assets/Bossle3.png', fit: BoxFit.cover),
           ],
         ),
       ),

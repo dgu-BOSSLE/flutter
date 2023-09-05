@@ -7,9 +7,6 @@ import 'preview_before_applying.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart'; // 추가
 
-// 사진 정렬 다시하기?
-// 색깔 톤 보라색으로 바꾸고 자잘한 글자 내용들 수정
-
 class DetailSettingsScreen extends StatefulWidget {
   @override
   _DetailSettingsState createState() => _DetailSettingsState();

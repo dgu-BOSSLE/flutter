@@ -77,8 +77,7 @@ flutter:
         - assets/rain.jpg
         - assets/splash.png
         - assets/icon/sun-clouds-rain.png
-        - assets/Bossle.png
-        - assets/Bossle1.png
+        - assets/Bossle3.png
     #   - images/a_dot_ham.jpeg
 
     # An image asset can refer to one or more resolution-specific "variants", see
