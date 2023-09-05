@@ -43,6 +43,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Home Screen'),
+        backgroundColor: seedColor,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end, // 변경된 부분

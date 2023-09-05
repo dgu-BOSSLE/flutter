@@ -5,7 +5,9 @@ import 'dart:io';
 import 'preview_screen_settings.dart';
 import 'preview_before_applying.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart'; // 추가
+import 'package:google_fonts/google_fonts.dart';
+
+const seedColor = Color(0xFFA3DAFF);
 
 class DetailSettingsScreen extends StatefulWidget {
   @override
@@ -35,6 +37,7 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('설정', style: GoogleFonts.notoSans(),),
+        backgroundColor: seedColor,
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -44,7 +47,7 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
             CustomCard(
               title: '바탕화면 선택',
               content: [
-                ElevatedButton(onPressed: _pickImage, child: Text('갤러리')),
+                ElevatedButton(onPressed: _pickImage, child: Text('갤러리', style: GoogleFonts.notoSans(color: Colors.black),), style: ElevatedButton.styleFrom(primary: seedColor),),
                 SizedBox(width: 10.0),
                 // ElevatedButton(onPressed: null, child: Text('현재 바탕화면')),
                 SizedBox(width: 10.0), // 추가한 부분
@@ -62,7 +65,8 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                             },
                           );
                         },
-                        child: Text('사진 확인'),
+                        child: Text('사진 확인', style: GoogleFonts.notoSans(color: Colors.black),),
+                        style: ElevatedButton.styleFrom(primary: seedColor),
                       ),
                     ],
                   ),
@@ -99,6 +103,8 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                         _sunny = value!;
                       });
                     },
+                    activeColor: seedColor,
+                    checkColor: Colors.black,
                   ),
                 ],
               ),
@@ -117,6 +123,8 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                         _rainy = value!;
                       });
                     },
+                    activeColor: seedColor,
+                    checkColor: Colors.black,
                   ),
                 ],
               ),
@@ -135,6 +143,8 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                         _rainy_hard = value!;
                       });
                     },
+                    activeColor: seedColor,
+                    checkColor: Colors.black,
                   ),
                 ],
               ),
@@ -153,6 +163,8 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                         _snowy = value!;
                       });
                     },
+                    activeColor: seedColor,
+                    checkColor: Colors.black,
                   ),
                 ],
               ),
@@ -168,7 +180,7 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                                 _selectedImage)), //context로 이미지 전달하며 프리뷰로 이동!
                   );
                 },
-                child: Text('효과 설정 미리보기')),
+                child: Text('효과 설정 미리보기', style: GoogleFonts.notoSans(color: Colors.black),), style: ElevatedButton.styleFrom(primary: seedColor),),
             SizedBox(height: 9),
             ElevatedButton(
               onPressed: () {
@@ -177,7 +189,7 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                   MaterialPageRoute(builder: (context) => PreviewBeforeApplyingScreen()),
                 );
               },
-              child: Text('Go to  Preview Before Applying'),
+              child: Text('Go to  Preview Before Applying', style: GoogleFonts.notoSans(color: Colors.black),), style: ElevatedButton.styleFrom(primary: seedColor),
             ),
           ],
         ),

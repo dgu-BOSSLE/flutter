@@ -9,7 +9,7 @@ import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
 
-const seedColor = Color(0xFF5CE1E6);
+const seedColor = Color(0xFFA3DAFF);
 
 class PreviewBeforeApplyingScreen extends StatefulWidget {
   @override
@@ -48,6 +48,7 @@ class _PreviewBeforeApplyingScreenState
     return Scaffold(
       appBar: AppBar(
         title: Text('Apply Screen', style: GoogleFonts.notoSans(),),
+        backgroundColor: seedColor,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -56,7 +57,7 @@ class _PreviewBeforeApplyingScreenState
           children: [
           Text(
           '배경화면 만들기',
-            style: GoogleFonts.notoSans(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),  // Google 폰트 적용
+            style: GoogleFonts.notoSans(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),  // Google 폰트 적용
         ),
         SizedBox(height: 40),
         Card(
@@ -78,7 +79,7 @@ class _PreviewBeforeApplyingScreenState
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            child: Text('적용',  style: GoogleFonts.notoSans(fontSize: 16),) // Google 폰트 적용),
+            child: Text('적용', style: GoogleFonts.notoSans(fontSize: 16),) // Google 폰트 적용),
           ),
         ),
         SizedBox(height: 20),

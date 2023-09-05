@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'dart:convert';
+import 'package:google_fonts/google_fonts.dart';
 
-const seedColor = Color(0xFFC8A2C8);
+const seedColor = Color(0xFFA3DAFF);
 const outPadding = 5.0;
 
 class PreviewScreenSettingsScreen extends StatefulWidget {
@@ -37,6 +38,7 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
     return Scaffold(
       appBar: AppBar(
         title: Text('Preview Screen Settings'),
+        backgroundColor: seedColor,
       ),
       body: Stack(
         children: [
@@ -88,7 +90,8 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                             _showSunScreen = false;
                           });
                         },
-                        child: Text("비 화면"),
+                        child: Text("비 화면", style: GoogleFonts.notoSans(color: Colors.black),),
+                        style: ElevatedButton.styleFrom(primary: seedColor),
                       ),
                       ElevatedButton(
                         onPressed: () {
@@ -98,7 +101,8 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                             _showSunScreen = false;
                           });
                         },
-                        child: Text("눈 화면"),
+                        child: Text("눈 화면", style: GoogleFonts.notoSans(color: Colors.black),),
+                        style: ElevatedButton.styleFrom(primary: seedColor),
                       ),
                       ElevatedButton(
                         onPressed: () {
@@ -108,7 +112,8 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                             _showSunScreen = true;
                           });
                         },
-                        child: Text("햇빛 화면"),
+                        child: Text("햇빛 화면", style: GoogleFonts.notoSans(color: Colors.black),),
+                        style: ElevatedButton.styleFrom(primary: seedColor),
                       ),
                     ],
                   ),
@@ -126,7 +131,8 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                         ),
                       );
                     },
-                    child: Text("결과값 확인하기"),
+                    child: Text("결과값 확인하기", style: GoogleFonts.notoSans(color: Colors.black),),
+                    style: ElevatedButton.styleFrom(primary: seedColor),
                   ),
                   if (_showRainScreen)
                     Padding(
@@ -148,6 +154,7 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                               max: 100,
                               divisions: 100,
                               label: '${_rainSliderValue.round()}%',
+                              activeColor: seedColor,  // 슬라이더의 active 색상을 seedColor로 설정
                             ),
                           ),
                           Text('100%', style: TextStyle(color: Colors.white)),
@@ -179,6 +186,7 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                                   max: 200,
                                   divisions: 100,
                                   label: '${_snowSliderValue.round()}%',
+                                  activeColor: seedColor,  // 슬라이더의 active 색상을 seedColor로 설정
                                 ),
                               ),
                               Container(
@@ -209,6 +217,7 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                                   max: 2,
                                   divisions: 100,
                                   label: '${_snowSpeedValue.round()}%',
+                                  activeColor: seedColor,  // 슬라이더의 active 색상을 seedColor로 설정
                                 ),
                               ),
                               Container(
