@@ -5,9 +5,9 @@ import 'dart:io';
 import 'preview_screen_settings.dart';
 import 'preview_before_applying.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-// 사진 정렬 다시하기?
-// 색깔 톤 보라색으로 바꾸고 자잘한 글자 내용들 수정
+const seedColor = Color(0xFFA3DAFF);
 
 class DetailSettingsScreen extends StatefulWidget {
   @override
@@ -36,21 +36,43 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('설정')),
+      appBar: AppBar(title: Text('설정', style: GoogleFonts.notoSans(),),
+        backgroundColor: seedColor,
+      ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            CustomCard(title: '바탕화면 선택', content: [
-              if (_selectedImage != null)
-                Image.file(
-                  _selectedImage!,
-                  height: 150,
-                ),
-              ElevatedButton(onPressed: _pickImage, child: Text('갤러리')),
-              ElevatedButton(onPressed: null, child: Text('현재 바탕화면')),
-            ]),
+            CustomCard(
+              title: '바탕화면 선택',
+              content: [
+                ElevatedButton(onPressed: _pickImage, child: Text('갤러리', style: GoogleFonts.notoSans(color: Colors.black),), style: ElevatedButton.styleFrom(primary: seedColor),),
+                SizedBox(width: 10.0),
+                // ElevatedButton(onPressed: null, child: Text('현재 바탕화면')),
+                SizedBox(width: 10.0), // 추가한 부분
+                if (_selectedImage != null) ...[
+                  Column( // 추가한 부분
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                content: Image.file(_selectedImage!),
+                              );
+                            },
+                          );
+                        },
+                        child: Text('사진 확인', style: GoogleFonts.notoSans(color: Colors.black),),
+                        style: ElevatedButton.styleFrom(primary: seedColor),
+                      ),
+                    ],
+                  ),
+                ],
+              ],
+            ),
             SizedBox(height: 9.0),
             CustomCard(title: '날씨 동기화', content: [
               Text('안함'),
@@ -81,6 +103,8 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                         _sunny = value!;
                       });
                     },
+                    activeColor: seedColor,
+                    checkColor: Colors.black,
                   ),
                 ],
               ),
@@ -99,6 +123,8 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                         _rainy = value!;
                       });
                     },
+                    activeColor: seedColor,
+                    checkColor: Colors.black,
                   ),
                 ],
               ),
@@ -117,6 +143,8 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                         _rainy_hard = value!;
                       });
                     },
+                    activeColor: seedColor,
+                    checkColor: Colors.black,
                   ),
                 ],
               ),
@@ -135,6 +163,8 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                         _snowy = value!;
                       });
                     },
+                    activeColor: seedColor,
+                    checkColor: Colors.black,
                   ),
                 ],
               ),
@@ -150,7 +180,7 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                                 _selectedImage)), //context로 이미지 전달하며 프리뷰로 이동!
                   );
                 },
-                child: Text('효과 설정 미리보기')),
+                child: Text('효과 설정 미리보기', style: GoogleFonts.notoSans(color: Colors.black),), style: ElevatedButton.styleFrom(primary: seedColor),),
             SizedBox(height: 9),
             ElevatedButton(
               onPressed: () {
@@ -159,7 +189,7 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                   MaterialPageRoute(builder: (context) => PreviewBeforeApplyingScreen()),
                 );
               },
-              child: Text('Go to  Preview Before Applying'),
+              child: Text('Go to  Preview Before Applying', style: GoogleFonts.notoSans(color: Colors.black),), style: ElevatedButton.styleFrom(primary: seedColor),
             ),
           ],
         ),
@@ -185,7 +215,10 @@ class CustomCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              style: GoogleFonts.notoSans(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(height: 8.0),
             Row(
