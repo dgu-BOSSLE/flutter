@@ -83,7 +83,7 @@ class HomeScreen extends StatelessWidget {
               ),
               padding: EdgeInsets.symmetric(horizontal: outPadding, vertical: 15),
             ),
-            child: Text('내 프리셋'),
+            child: Text('잠금화면으로 설정'),
           ),
           SizedBox(height: 80), // 추가된 부분
         ],
