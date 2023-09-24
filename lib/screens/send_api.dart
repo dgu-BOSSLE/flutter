@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
-class MyApp extends StatelessWidget {
+class APiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -33,8 +33,8 @@ class _ApiCallOnTimeState extends State<ApiCallOnTime> {
 
   Future<void> callApi() async {
     final now = DateTime.now();
-    final startTime = DateTime(now.year, now.month, now.day, 3);
-    final endTime = DateTime(now.year, now.month, now.day, 3,40);
+    final startTime = DateTime(now.year, now.month, now.day, 16,0);
+    final endTime = DateTime(now.year, now.month, now.day, 16,40);
 
     if (now.isAfter(startTime) && now.isBefore(endTime)) {
       final response = await http.get(Uri.parse('https://helpp.free.beeceptor.com/todos'));
@@ -61,8 +61,4 @@ class _ApiCallOnTimeState extends State<ApiCallOnTime> {
       child: Text(_apiResponse),
     );
   }
-}
-
-void main() {
-  runApp(MyApp());
 }

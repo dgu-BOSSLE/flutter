@@ -7,6 +7,7 @@ import 'dart:io';
 import 'dart:convert';
 import 'dart:math';
 import 'package:http/http.dart' as http;
+import 'globals.dart';
 
 class PreviewBeforeApplyingScreen extends StatefulWidget {
   @override
@@ -156,7 +157,7 @@ class _PreviewBeforeApplyingScreenState
       var dir = await getApplicationDocumentsDirectory();
       var file = File('${dir.path}/rain$fileIndex.mp4');
       await file.writeAsBytes(decodedBytes);
-
+      GlobalVariables.setShouldCallApi(true); //추가
       print("File saved at ${file.path}");
 
       // Show a simple alert dialog
