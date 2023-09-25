@@ -8,8 +8,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
-
-const seedColor = Color(0xFFA3DAFF);
+import '../colors.dart';
 
 class PreviewBeforeApplyingScreen extends StatefulWidget {
   @override
@@ -46,50 +45,22 @@ class _PreviewBeforeApplyingScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      backgroundColor: SeedColors.darkest,
       appBar: AppBar(
-        title: Text('Apply Screen', style: GoogleFonts.notoSans(),),
-        backgroundColor: seedColor,
+        title: Text('', style: GoogleFonts.notoSans(),),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(0.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-          Text(
-          '배경화면 만들기',
-            style: GoogleFonts.notoSans(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),  // Google 폰트 적용
-        ),
-        SizedBox(height: 40),
-        Card(
-          elevation: 8,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: ElevatedButton(
-            onPressed: () {
-              _webViewController.evaluateJavascript(
-                  source: 'window.isButtonPressed = true;');
-              _showRandomPopup();
-            },
-            style: ElevatedButton.styleFrom(
-              primary: seedColor,
-              onPrimary: Colors.black,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-            child: Text('적용', style: GoogleFonts.notoSans(fontSize: 16),) // Google 폰트 적용),
-          ),
-        ),
-        SizedBox(height: 20),
-        Expanded(
-          child: Card(
-            elevation: 8,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-              child: InAppWebView(
+            Expanded(
+              child:
+              InAppWebView(
                 initialUrlRequest:
                 URLRequest(url: Uri.parse(websiteUrls[currentIndex])),
                 onWebViewCreated: (controller) {
@@ -115,9 +86,26 @@ class _PreviewBeforeApplyingScreenState
                 },
               ),
             ),
-           ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+          shape: CircularNotchedRectangle(),
+          notchMargin: 8.0,
+          color: SeedColors.darker,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              TextButton(
+                child: Text("배경화면 생성하기", style: SeedColors.font_w,),
+                onPressed: () {
+                  _webViewController.evaluateJavascript(
+                      source: 'window.isButtonPressed = true;');
+                  _showRandomPopup();
+                },
+              ),
+            ],
+          )
       ),
     );
   }
@@ -149,41 +137,51 @@ class _PreviewBeforeApplyingScreenState
             if (snapshot.data! <= 0) {
               return SizedBox.shrink();
             }
-
+            final LinearGradient grad = LinearGradient(
+              colors: [Color(0xCF5835b2), Color(0xFF372b85)], // 그라디언트 색상
+              begin: Alignment.topLeft, // 그라디언트 시작 위치
+              end: Alignment.bottomRight, // 그라디언트 끝 위치
+            );
             return Dialog(
-              backgroundColor: Colors.white,
+              backgroundColor: SeedColors.darker,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(40.0),
+                side: BorderSide(color: Color(0xFFb99ddb), width: 1.0),
               ),
               elevation: 16,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          randomMessages[randomIndex],
-                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          snapshot.data.toString(),
-                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: Image.network(cuteGifs[randomGifIndex], fit: BoxFit.cover),
-                    ),
-                  ],
+              child: Container(
+                decoration: BoxDecoration(gradient: grad, borderRadius: BorderRadius.circular(40.0)),
+                child:
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            randomMessages[randomIndex],
+                            style: SeedColors.font_w,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            snapshot.data.toString(),
+                            style: SeedColors.font_w,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: Image.network(cuteGifs[randomGifIndex], fit: BoxFit.cover),
+                      ),
+                    ],
+                  ),
                 ),
               ),
+
             );
           },
         );
@@ -227,12 +225,12 @@ class _PreviewBeforeApplyingScreenState
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            backgroundColor: Colors.white,
-            title: Text('알림'),
-            content: Text('배경화면이 저장돼었습니다!'),
+            backgroundColor: SeedColors.darker,
+            title: Text('알림',style: TextStyle(color: Colors.white),),
+            content: Text('저장 완료!', style: TextStyle(color: Colors.white)),
             actions: [
               TextButton(
-                child: Text('확인', style: TextStyle(color: Colors.black)),
+                child: Text('확인', style: TextStyle(color: Colors.white)),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

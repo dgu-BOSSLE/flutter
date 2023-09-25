@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'dart:convert';
 import 'package:google_fonts/google_fonts.dart';
+import '../colors.dart';
 
 const seedColor = Color(0xFFA3DAFF);
 const outPadding = 5.0;
@@ -36,9 +37,10 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
       base64Image = base64Encode(widget.imageFile!.readAsBytesSync());
     }
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text('Preview Screen Settings'),
-        backgroundColor: seedColor,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       body: Stack(
         children: [
@@ -60,80 +62,42 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
           ),
           if (_showSunScreen) SunPreview(),
           Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
+            bottom: -2,
+            left: -2,
+            right: -2,
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.6),
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(50.0),
-                  topRight: Radius.circular(50.0),
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0),
                 ),
                 border: Border.all(
-                  color: seedColor,
-                  width: 1,
+                  color: Color(0xFFb99ddb),
+                  width: 2,
                 ),
               ),
               padding: EdgeInsets.all(outPadding), // outPadding 적용
-              height: 230, // Adjusted height to fit the new button
+              height: 130, // Adjusted height to fit the new button
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            _showSnowScreen = false;
-                            _showRainScreen = true;
-                            _showSunScreen = false;
-                          });
-                        },
-                        child: Text("비 화면", style: GoogleFonts.notoSans(color: Colors.black),),
-                        style: ElevatedButton.styleFrom(primary: seedColor),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            _showSnowScreen = true;
-                            _showRainScreen = false;
-                            _showSunScreen = false;
-                          });
-                        },
-                        child: Text("눈 화면", style: GoogleFonts.notoSans(color: Colors.black),),
-                        style: ElevatedButton.styleFrom(primary: seedColor),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            _showSnowScreen = false;
-                            _showRainScreen = false;
-                            _showSunScreen = true;
-                          });
-                        },
-                        child: Text("햇빛 화면", style: GoogleFonts.notoSans(color: Colors.black),),
-                        style: ElevatedButton.styleFrom(primary: seedColor),
-                      ),
-                    ],
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ResultScreen(
-                            snowValue: _snowSliderValue,
-                            rainValue: _rainSliderValue,
-                            snowSpeed: _snowSpeedValue,
-                            base64Image: base64Image,
-                          ),
-                        ),
-                      );
-                    },
-                    child: Text("결과값 확인하기", style: GoogleFonts.notoSans(color: Colors.black),),
-                    style: ElevatedButton.styleFrom(primary: seedColor),
-                  ),
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //         builder: (context) => ResultScreen(
+                  //           snowValue: _snowSliderValue,
+                  //           rainValue: _rainSliderValue,
+                  //           snowSpeed: _snowSpeedValue,
+                  //           base64Image: base64Image,
+                  //         ),
+                  //       ),
+                  //     );
+                  //   },
+                  //   child: Text("결과값 확인하기", style: GoogleFonts.notoSans(color: Colors.black),),
+                  //   style: ElevatedButton.styleFrom(primary: seedColor),
+                  // ),
                   if (_showRainScreen)
                     Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -154,7 +118,7 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                               max: 100,
                               divisions: 100,
                               label: '${_rainSliderValue.round()}%',
-                              activeColor: seedColor,  // 슬라이더의 active 색상을 seedColor로 설정
+                              activeColor: SeedColors.darker,  // 슬라이더의 active 색상을 seedColor로 설정
                             ),
                           ),
                           Text('100%', style: TextStyle(color: Colors.white)),
@@ -186,7 +150,7 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                                   max: 200,
                                   divisions: 100,
                                   label: '${_snowSliderValue.round()}%',
-                                  activeColor: seedColor,  // 슬라이더의 active 색상을 seedColor로 설정
+                                  activeColor: SeedColors.darker,  // 슬라이더의 active 색상을 seedColor로 설정
                                 ),
                               ),
                               Container(
@@ -217,7 +181,7 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                                   max: 2,
                                   divisions: 100,
                                   label: '${_snowSpeedValue.round()}%',
-                                  activeColor: seedColor,  // 슬라이더의 active 색상을 seedColor로 설정
+                                  activeColor: SeedColors.darker,  // 슬라이더의 active 색상을 seedColor로 설정
                                 ),
                               ),
                               Container(
@@ -233,6 +197,36 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+          shape: CircularNotchedRectangle(),
+          notchMargin: 8.0,
+          color: SeedColors.darker,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              TextButton(
+                child: Text('비', style: SeedColors.font_w,),
+                onPressed: () {
+                  setState(() {
+                    _showSnowScreen = false;
+                    _showRainScreen = true;
+                    _showSunScreen = false;
+                  });
+                },
+              ),
+              TextButton(
+                child: Text("눈", style: SeedColors.font_w,),
+                onPressed: () {
+                  setState(() {
+                    _showSnowScreen = true;
+                    _showRainScreen = false;
+                    _showSunScreen = false;
+                  });
+                },
+              ),
+            ],
+          )
       ),
     );
   }
