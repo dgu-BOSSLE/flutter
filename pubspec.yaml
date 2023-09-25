@@ -78,6 +78,7 @@ flutter:
         - assets/splash.png
         - assets/icon/sun-clouds-rain.png
         - assets/Bossle3.png
+        - assets/home.jpg
     #   - images/a_dot_ham.jpeg
 
     # An image asset can refer to one or more resolution-specific "variants", see
