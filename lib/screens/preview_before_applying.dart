@@ -9,6 +9,9 @@ import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
 import '../colors.dart';
+import 'globals.dart';
+
+const seedColor = Color(0xFFA3DAFF);
 
 class PreviewBeforeApplyingScreen extends StatefulWidget {
   @override
@@ -41,7 +44,7 @@ class _PreviewBeforeApplyingScreenState
       await Permission.storage.request();
     }
   }
-//
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -195,7 +198,7 @@ class _PreviewBeforeApplyingScreenState
       if (counter < 1) {
         timer.cancel();
         streamController.close();
-        Navigator.of(context, rootNavigator: true).pop();  // 이 부분을 타이머 내부로 이동
+        Navigator.of(context, rootNavigator: true).pop(); // 이 부분을 타이머 내부로 이동
       } else {
         if (!streamController.isClosed) {
           streamController.add(counter);
@@ -204,7 +207,6 @@ class _PreviewBeforeApplyingScreenState
       }
     });
   }
-
 
   Future<void> _handleDownload(String dataUri, int fileIndex) async {
     try {
@@ -217,7 +219,7 @@ class _PreviewBeforeApplyingScreenState
       var dir = await getApplicationDocumentsDirectory();
       var file = File('${dir.path}/rain$fileIndex.mp4');
       await file.writeAsBytes(decodedBytes);
-
+      GlobalVariables.setShouldCallApi(true); //추가
       print("File saved at ${file.path}");
 
       // Show a simple alert dialog
