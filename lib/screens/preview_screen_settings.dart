@@ -5,6 +5,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'dart:convert';
 import 'package:google_fonts/google_fonts.dart';
 import '../colors.dart';
+import 'globals.dart';
 
 const seedColor = Color(0xFFA3DAFF);
 const outPadding = 5.0;
@@ -30,6 +31,18 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
   bool _showRainScreen = false;
   bool _showSunScreen = false;
   String base64Image = "";
+
+  @override
+  void initState() {
+    super.initState();
+    GlobalVariables.loadPreferences().then((_) {
+      setState(() {
+        _rainSliderValue = GlobalVariables.rainSliderValue;
+        _snowSliderValue = GlobalVariables.snowSliderValue;
+        _snowSpeedValue = GlobalVariables.snowSpeedValue;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +124,8 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                               onChanged: (value) {
                                 setState(() {
                                   _rainSliderValue = value;
+                                  GlobalVariables.rainSliderValue = _rainSliderValue;
+                                  GlobalVariables.setPreferences();
                                 });
                                 _rainWebViewController.evaluateJavascript(source: 'setGlobalDropletIntensity($_rainSliderValue);');
                               },
@@ -143,6 +158,8 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                                   onChanged: (value) {
                                     setState(() {
                                       _snowSliderValue = value;
+                                      GlobalVariables.snowSliderValue = _snowSliderValue;
+                                      GlobalVariables.setPreferences();
                                     });
                                     _snowWebViewController.evaluateJavascript(source: 'setSnowDensity($_snowSliderValue);');
                                   },
@@ -174,6 +191,8 @@ class _PreviewScreenSettingsScreenState extends State<PreviewScreenSettingsScree
                                   onChanged: (value) {
                                     setState(() {
                                       _snowSpeedValue = value;
+                                      GlobalVariables.snowSpeedValue = _snowSpeedValue;
+                                      GlobalVariables.setPreferences();
                                     });
                                     _snowWebViewController.evaluateJavascript(source: 'setSnowFallSpeed($_snowSpeedValue);');
                                   },

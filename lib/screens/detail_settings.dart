@@ -6,6 +6,7 @@ import 'preview_screen_settings.dart';
 import 'preview_before_applying.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../screens/globals.dart';
 import '../colors.dart';
 
 class DetailSettingsScreen extends StatefulWidget {
@@ -21,6 +22,22 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
   bool _rainy_hard = true;
   bool _snowy = true;
 
+  @override
+  void initState() {
+    super.initState();
+    // SharedPreferences에서 값을 로드합니다.
+    GlobalVariables.loadPreferences().then((_) {
+      setState(() {
+        _sync_weather = GlobalVariables.syncWeather;
+        _sunny = GlobalVariables.sunny;
+        _rainy = GlobalVariables.rainy;
+        _rainy_hard = GlobalVariables.rainyHard;
+        _snowy = GlobalVariables.snowy;
+        _selectedImage = GlobalVariables.selectedImage;
+      });
+    });
+  }
+
   Future<void> _pickImage() async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
@@ -28,6 +45,9 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
     if (pickedImage != null) {
       setState(() {
         _selectedImage = File(pickedImage.path);
+        // SharedPreferences에 selectedImage의 경로를 저장합니다.
+        GlobalVariables.selectedImage = _selectedImage;
+        GlobalVariables.setPreferences();
       });
     }
   }
@@ -90,6 +110,8 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                 onChanged: (value) {
                   setState(() {
                     _sync_weather = value;
+                    GlobalVariables.syncWeather = _sync_weather;
+                    GlobalVariables.setPreferences();
                   });
                 },
               ),
@@ -110,6 +132,8 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                     onChanged: (value) {
                       setState(() {
                         _sunny = value!;
+                        GlobalVariables.sunny = _sunny;
+                        GlobalVariables.setPreferences();
                       });
                     },
                     activeColor: SeedColors.lightest,
@@ -131,6 +155,8 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                     onChanged: (value) {
                       setState(() {
                         _rainy = value!;
+                        GlobalVariables.rainy = _rainy;
+                        GlobalVariables.setPreferences();
                       });
                     },
                     activeColor: SeedColors.lightest,
@@ -152,6 +178,8 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                     onChanged: (value) {
                       setState(() {
                         _rainy_hard = value!;
+                        GlobalVariables.rainyHard = _rainy_hard;
+                        GlobalVariables.setPreferences();
                       });
                     },
                     activeColor: SeedColors.lightest,
@@ -173,6 +201,8 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                     onChanged: (value) {
                       setState(() {
                         _snowy = value!;
+                        GlobalVariables.snowy = _snowy;
+                        GlobalVariables.setPreferences();
                       });
                     },
                     activeColor: SeedColors.lightest,
