@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'screens/home.dart';
 import 'screens/send_api.dart';
 import 'screens/globals.dart';
@@ -6,7 +7,11 @@ import 'screens/globals.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await GlobalVariables.loadPreferences();
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) {
+    runApp(MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {

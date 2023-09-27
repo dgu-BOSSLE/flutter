@@ -9,8 +9,7 @@ import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
 import 'globals.dart';
-
-const seedColor = Color(0xFFA3DAFF);
+import '../colors.dart';
 
 class PreviewBeforeApplyingScreen extends StatefulWidget {
   @override
@@ -49,85 +48,63 @@ class _PreviewBeforeApplyingScreenState
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Apply Screen',
+          '배경화면 만들기',
           style: GoogleFonts.notoSans(),
         ),
-        backgroundColor: seedColor,
+        backgroundColor: SeedColors.primary,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(0.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              '배경화면 만들기',
-              style: GoogleFonts.notoSans(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black), // Google 폰트 적용
-            ),
-            SizedBox(height: 40),
-            Card(
-              elevation: 8,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: ElevatedButton(
-                  onPressed: () {
-                    _webViewController.evaluateJavascript(
-                        source: 'window.isButtonPressed = true;');
-                    _showRandomPopup();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: seedColor,
-                    onPrimary: Colors.black,
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  child: Text(
-                    '적용',
-                    style: GoogleFonts.notoSans(fontSize: 16),
-                  ) // Google 폰트 적용),
-                  ),
-            ),
-            SizedBox(height: 20),
             Expanded(
-              child: Card(
-                elevation: 8,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: InAppWebView(
-                  initialUrlRequest:
-                      URLRequest(url: Uri.parse(websiteUrls[currentIndex])),
-                  onWebViewCreated: (controller) {
-                    _webViewController = controller;
-                  },
-                  onConsoleMessage: (controller, consoleMessage) {
-                    print(consoleMessage);
-                  },
-                  onLoadStop: (controller, url) {
-                    int currentFileIndex =
-                        currentIndex; // Save the currentIndex before incrementing
-                    controller.addJavaScriptHandler(
-                        handlerName: "videoCreated",
-                        callback: (args) {
-                          _handleDownload(args[0], currentFileIndex);
-                          if (currentIndex < websiteUrls.length - 1) {
-                            currentIndex++;
-                            controller.loadUrl(
-                                urlRequest: URLRequest(
-                                    url: Uri.parse(websiteUrls[currentIndex])));
-                          }
-                        });
-                  },
-                ),
+              child: InAppWebView(
+                initialUrlRequest:
+                URLRequest(url: Uri.parse(websiteUrls[currentIndex])),
+                onWebViewCreated: (controller) {
+                  _webViewController = controller;
+                },
+                onConsoleMessage: (controller, consoleMessage) {
+                  print(consoleMessage);
+                },
+                onLoadStop: (controller, url) {
+                  int currentFileIndex =
+                      currentIndex; // Save the currentIndex before incrementing
+                  controller.addJavaScriptHandler(
+                      handlerName: "videoCreated",
+                      callback: (args) {
+                        _handleDownload(args[0], currentFileIndex);
+                        if (currentIndex < websiteUrls.length - 1) {
+                          currentIndex++;
+                          controller.loadUrl(
+                              urlRequest: URLRequest(
+                                  url: Uri.parse(websiteUrls[currentIndex])));
+                        }
+                      });
+                },
               ),
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+          shape: CircularNotchedRectangle(),
+          notchMargin: 8.0,
+          color: SeedColors.primary,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              TextButton(
+                child: Text("배경화면 생성하기"),
+                onPressed: () {
+                  _webViewController.evaluateJavascript(
+                      source: 'window.isButtonPressed = true;');
+                  _showRandomPopup();
+                },
+              ),
+            ],
+          )
       ),
     );
   }

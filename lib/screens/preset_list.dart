@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:gallery_saver/gallery_saver.dart';
+import '../colors.dart';
 
 class PresetListScreen extends StatelessWidget {
   Future<String> copyAssetToExternalStorage(String assetPath, String fileName) async {
@@ -48,6 +49,7 @@ class PresetListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: SeedColors.primary,
         title: Text('Live Wallpaper Example'),
       ),
       body: Center(
@@ -55,10 +57,10 @@ class PresetListScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
+              style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(SeedColors.primary)),
               onPressed: () async {
                 String result;
                 bool goToHome = true;
-
                 try {
                   await requestPermission();
                   String filePath = await copyAssetToExternalStorage('assets/raw/cat.mp4', 'cat.mp4');
@@ -87,6 +89,7 @@ class PresetListScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),  // Adds some space between the buttons
             ElevatedButton(
+              style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(SeedColors.primary)),
               onPressed: () {
                 saveToGallery(context);
               },
