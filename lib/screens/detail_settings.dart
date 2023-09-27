@@ -6,7 +6,8 @@ import 'preview_screen_settings.dart';
 import 'preview_before_applying.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../colors.dart';
+
+const seedColor = Color(0xFFA3DAFF);
 
 class DetailSettingsScreen extends StatefulWidget {
   @override
@@ -34,29 +35,19 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final LinearGradient bgrad = LinearGradient(
-      colors: [Color(0xCF5835b2), Color(0xFF372b85)], // 그라디언트 색상
-      begin: Alignment.topLeft, // 그라디언트 시작 위치
-      end: Alignment.bottomRight, // 그라디언트 끝 위치
-    );
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      extendBody: true,
-      backgroundColor: SeedColors.darkest,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+      appBar: AppBar(title: Text('설정', style: GoogleFonts.notoSans(),),
+        backgroundColor: seedColor,
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
-          // crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             CustomCard(
               title: '바탕화면 선택',
               content: [
-                ElevatedButton(onPressed: _pickImage, child: Text('갤러리', style: GoogleFonts.notoSans(color: Colors.black),), style: ElevatedButton.styleFrom(primary: Colors.white),),
+                ElevatedButton(onPressed: _pickImage, child: Text('갤러리', style: GoogleFonts.notoSans(color: Colors.black),), style: ElevatedButton.styleFrom(primary: seedColor),),
                 SizedBox(width: 10.0),
                 // ElevatedButton(onPressed: null, child: Text('현재 바탕화면')),
                 SizedBox(width: 10.0), // 추가한 부분
@@ -75,7 +66,7 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                           );
                         },
                         child: Text('사진 확인', style: GoogleFonts.notoSans(color: Colors.black),),
-                        style: ElevatedButton.styleFrom(primary: Colors.white),
+                        style: ElevatedButton.styleFrom(primary: seedColor),
                       ),
                     ],
                   ),
@@ -84,7 +75,7 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
             ),
             SizedBox(height: 9.0),
             CustomCard(title: '날씨 동기화', content: [
-              Icon(Icons.sync_disabled, size: 30, color: Colors.redAccent, ),
+              Text('안함'),
               Switch(
                 value: _sync_weather,
                 onChanged: (value) {
@@ -93,7 +84,7 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                   });
                 },
               ),
-              Icon(Icons.sync, size: 30, color: Colors.greenAccent, ),
+              Text('동기화'),
             ]),
             SizedBox(height: 9.0),
             CustomCard(title: '선택한 날씨만 활성화', content: [
@@ -112,12 +103,11 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                         _sunny = value!;
                       });
                     },
-                    activeColor: SeedColors.lightest,
+                    activeColor: seedColor,
                     checkColor: Colors.black,
                   ),
                 ],
               ),
-              SizedBox(width: 16.0),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -133,12 +123,11 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                         _rainy = value!;
                       });
                     },
-                    activeColor: SeedColors.lightest,
+                    activeColor: seedColor,
                     checkColor: Colors.black,
                   ),
                 ],
               ),
-              SizedBox(width: 16.0),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -154,12 +143,11 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                         _rainy_hard = value!;
                       });
                     },
-                    activeColor: SeedColors.lightest,
+                    activeColor: seedColor,
                     checkColor: Colors.black,
                   ),
                 ],
               ),
-              SizedBox(width: 16.0),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -175,46 +163,36 @@ class _DetailSettingsState extends State<DetailSettingsScreen> {
                         _snowy = value!;
                       });
                     },
-                    activeColor: SeedColors.lightest,
+                    activeColor: seedColor,
                     checkColor: Colors.black,
                   ),
                 ],
               ),
             ]),
+            SizedBox(height: 9.0),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PreviewScreenSettingsScreen(
+                            imageFile:
+                                _selectedImage)), //context로 이미지 전달하며 프리뷰로 이동!
+                  );
+                },
+                child: Text('효과 설정 미리보기', style: GoogleFonts.notoSans(color: Colors.black),), style: ElevatedButton.styleFrom(primary: seedColor),),
+            SizedBox(height: 9),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PreviewBeforeApplyingScreen()),
+                );
+              },
+              child: Text('Go to  Preview Before Applying', style: GoogleFonts.notoSans(color: Colors.black),), style: ElevatedButton.styleFrom(primary: seedColor),
+            ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
-        notchMargin: 8.0,
-        color: SeedColors.darker,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            TextButton(
-              child: Text('날씨 조절', style: SeedColors.font_w,),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => PreviewScreenSettingsScreen(
-                          imageFile:
-                          _selectedImage)), //context로 이미지 전달하며 프리뷰로 이동!
-                );
-              },
-            ),
-            TextButton(
-              child: Text("다음으로", style: SeedColors.font_w,),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => PreviewBeforeApplyingScreen()), //context로 이미지 전달하며 프리뷰로 이동!
-                );
-              },
-            ),
-          ],
-        )
       ),
     );
   }
@@ -228,39 +206,28 @@ class CustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LinearGradient grad = LinearGradient(
-      colors: [Color(0xCF5835b2), Color(0xFF372b85)], // 그라디언트 색상
-      begin: Alignment.topLeft, // 그라디언트 시작 위치
-      end: Alignment.bottomRight, // 그라디언트 끝 위치
-    );
     return Card(
-      elevation: 40.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(40.0),
-        side: BorderSide(color: Color(0xFFb99ddb), width: 1.0),
-      ),
-      color: Colors.white,
-      child:
-        Container(
-          decoration: BoxDecoration(gradient: grad, borderRadius: BorderRadius.circular(40.0)),
-          child: Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: SeedColors.font_w,
-                ),
-                SizedBox(height: 8.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: content,
-                )
-              ],
+      elevation: 8.0,
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: GoogleFonts.notoSans(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
+            SizedBox(height: 8.0),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: content,
+            )
+          ],
         ),
+      ),
     );
   }
 }
