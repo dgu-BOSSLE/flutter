@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:async_wallpaper/async_wallpaper.dart';
 import 'package:flutter/services.dart';
@@ -7,44 +6,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import '../colors.dart';
 
+const seedColor = Color(0xFFA3DAFF);
+
 class PresetListScreen extends StatelessWidget {
-  Future<String> copyAssetToExternalStorage(String assetPath, String fileName) async {
-    final byteData = await rootBundle.load(assetPath);
-
-    final appDocDir = await getApplicationDocumentsDirectory();
-    final file = await File('${appDocDir.path}/$fileName').create(recursive: true);
-
-    await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-
-    return file.path;
-  }
-
-  Future<void> requestPermission() async {
-    PermissionStatus status = await Permission.storage.request();
-    if (status.isDenied) {
-      // The user denied the permission
-      throw Exception('Storage permission denied');
-    }
-    if (status.isPermanentlyDenied) {
-      // The user denied the permission permanently. Open app settings to allow the user to enable it.
-      openAppSettings();
-    }
-  }
-
-  Future<void> saveToGallery(BuildContext context) async {
-    final byteData = await rootBundle.load('assets/raw/cat.mp4');
-
-    final extDir = await getExternalStorageDirectory();
-    final file = await File('${extDir?.path}/cat.mp4').create(recursive: true);
-
-    await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-
-    GallerySaver.saveVideo(file.path).then((bool? success) {
-      String result = success == true ? "비디오 저장 성공!" : "비디오 저장 실패.";
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(result)));
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

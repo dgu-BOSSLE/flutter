@@ -42,7 +42,7 @@ class _PreviewBeforeApplyingScreenState
       await Permission.storage.request();
     }
   }
-
+//
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,6 +85,7 @@ class _PreviewBeforeApplyingScreenState
                 },
               ),
             ),
+           ),
           ],
         ),
       ),
@@ -154,26 +155,19 @@ class _PreviewBeforeApplyingScreenState
                       children: [
                         Text(
                           randomMessages[randomIndex],
-                          style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
+                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
                         ),
                         SizedBox(width: 10),
                         Text(
                           snapshot.data.toString(),
-                          style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
+                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
                         ),
                       ],
                     ),
                     SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: Image.network(cuteGifs[randomGifIndex],
-                          fit: BoxFit.cover),
+                      child: Image.network(cuteGifs[randomGifIndex], fit: BoxFit.cover),
                     ),
                   ],
                 ),
@@ -191,7 +185,7 @@ class _PreviewBeforeApplyingScreenState
       if (counter < 1) {
         timer.cancel();
         streamController.close();
-        Navigator.of(context, rootNavigator: true).pop(); // 이 부분을 타이머 내부로 이동
+        Navigator.of(context, rootNavigator: true).pop();  // 이 부분을 타이머 내부로 이동
       } else {
         if (!streamController.isClosed) {
           streamController.add(counter);
@@ -200,6 +194,7 @@ class _PreviewBeforeApplyingScreenState
       }
     });
   }
+
 
   Future<void> _handleDownload(String dataUri, int fileIndex) async {
     try {
@@ -212,7 +207,7 @@ class _PreviewBeforeApplyingScreenState
       var dir = await getApplicationDocumentsDirectory();
       var file = File('${dir.path}/rain$fileIndex.mp4');
       await file.writeAsBytes(decodedBytes);
-      GlobalVariables.setShouldCallApi(true); //추가
+
       print("File saved at ${file.path}");
 
       // Show a simple alert dialog
@@ -222,7 +217,7 @@ class _PreviewBeforeApplyingScreenState
           return AlertDialog(
             backgroundColor: Colors.white,
             title: Text('알림'),
-            content: Text('배경화면이 저장되었습니다!'),
+            content: Text('배경화면이 저장돼었습니다!'),
             actions: [
               TextButton(
                 child: Text('확인', style: TextStyle(color: Colors.black)),
