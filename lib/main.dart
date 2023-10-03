@@ -39,7 +39,7 @@ class _MainScreenState extends State<MainScreen> {
         children: [
           Expanded(child: HomeScreen()), // HomeScreen 위젯
           if(GlobalVariables.shouldCallApi ?? true) //나중에 false해야함.
-            Expanded(child: ApiCallOnTime()), // ApiCallOnTime 위젯
+            ApiCallOnTime(), // ApiCallOnTime 위젯
         ],
       ),
     );
